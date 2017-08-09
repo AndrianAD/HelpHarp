@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Help Harp</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="harmonica_stroi">
+        <item>Рихтеровская </item>
+        <item>Падди</item>
+        <item>Кантри</item>
+    </string-array>
+</resources>

@@ -12,8 +12,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.example.user.helpharp.MainActivity;
-
 public class CustomKeyboard {
 
     /**
@@ -38,9 +36,8 @@ public class CustomKeyboard {
         public void onKey(int primaryCode, int[] keyCodes) {
             // NOTE We can say '<Key android:codes="49,50" ... >' in the xml file; all codes come in keyCodes, the first in this list in primaryCode
             // Get the EditText and its Editable
-            MainActivity main = new MainActivity();
             View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
-            if (focusCurrent == null || focusCurrent.getClass() != EditText.class) return;
+            if (focusCurrent == null) return;
             EditText edittext = (EditText) focusCurrent;
             Editable editable = edittext.getText();
             int start = edittext.getSelectionStart();

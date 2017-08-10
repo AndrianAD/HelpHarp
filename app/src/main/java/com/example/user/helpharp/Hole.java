@@ -11,8 +11,6 @@ public class Hole {
     }
 
 
-    public static int stroi1 = 1;
-    public static int stroi2 = 1;
     static Note[] masiv_note;
     public static ArrayList noteList = new ArrayList();
 

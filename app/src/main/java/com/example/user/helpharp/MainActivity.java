@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,8 +23,12 @@ public class MainActivity extends AppCompatActivity {
     Harp harp2 = new Harp();
     CustomKeyboard mCustomKeyboard;
     public static ArrayList<String> list = new ArrayList<String>();
+    public static ArrayList<Integer> tempArray = new ArrayList<>();
     EditText enterTab;
     TextView result;
+    public static Hole final_tabs;
+    int temp;
+    static int octava_set = 0;
 
 
     @Override
@@ -54,6 +57,44 @@ public class MainActivity extends AppCompatActivity {
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
         actionCount = (Button) findViewById(R.id.button_action_count);
+
+
+        Button octava_plus = (Button) findViewById(R.id.octava_plus);
+        final Button octava_minus = (Button) findViewById(R.id.octava_minus);
+        octava_minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    int min = (int) Collections.min(tempArray);
+                    if (octava_set >= 25) {
+                        return;
+                    }
+                    if (min >= 12) {
+                        octava_set = octava_set + 12;
+                        changetabs(harp1, harp2);
+                    } else
+                        return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        octava_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    int max = (int) Collections.max(tempArray);
+                    if (max <= 25) {
+                        octava_set = octava_set + (-12);
+                        changetabs(harp1, harp2);
+                    } else
+                        return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
         actionCount.setOnClickListener(new View.OnClickListener() {
@@ -144,8 +185,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-//        ---------------------------------------
-    }
+    } /*end of start activity*/
 
     private void calculate(Harp harp1, Harp harp2) {
         try {
@@ -153,14 +193,62 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             String get_tab = (enterTab.getText().toString());
-
+            octava_set = 0;
             get_tab = get_tab.replace("\n", " \n ");
             input_tabs(get_tab);
-
+            changetabs(harp1, harp2);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void changetabs(Harp harp1, Harp harp2) {
+        try {
+            tempArray.clear();
+            String rezultat = "";
+            temp = check_temp(harp1.position, harp2.position);
+            for (int i = 0; i < list.size(); i++) {
+                String list_i = list.get(i);
+                if (list_i.contains("\n"))
+                    rezultat += "\n";
+                for (int j = 0; j < 38; j++) {
+                    Hole hole = (Hole) harp1.allnote.get(j);
+                    String list_J = hole.getTabs();
+                    // Ищет совпадения в первом List
+                    if (list_J.equals(list_i)) {
+                        int peremennaia = j + temp;
+                        if (peremennaia < 0) {
+                            peremennaia = peremennaia + 12;
+                        }
+                        if (peremennaia > 37) {
+                            peremennaia = peremennaia - 12;
+                        }
+                        tempArray.add(peremennaia - octava_set);
+                        final_tabs = (Hole) harp2.allnote.get(peremennaia - octava_set);
+                        rezultat += " " + final_tabs.getTabs();
+                        break;
+                    }
+                }
+            }
+            result.setText(rezultat);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int check_temp(int n, int z) {
+        int temp = z - n;
+        int[] nums = {-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11};
+        for (int i : nums) {
+            if (temp == i) {
+                temp = 12 - (-i);
+                break;
+            }
+        }
+        return temp;
+    }
+
+
 
     @Override
     public void onBackPressed() {

@@ -12,8 +12,11 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-public class CustomKeyboard {
+import static com.example.user.helpharp.MainActivity.calculate;
+import static com.example.user.helpharp.MainActivity.harp1;
+import static com.example.user.helpharp.MainActivity.harp2;
 
+public class CustomKeyboard {
     /**
      * A link to the KeyboardView that is used to render this CustomKeyboard.
      */
@@ -46,15 +49,19 @@ public class CustomKeyboard {
                 hideCustomKeyboard();
             } else if (primaryCode == CodeDelete) {
                 if (editable != null && start > 0) editable.delete(start - 1, start);
+                calculate(harp1, harp2);
 
             } else if (primaryCode == Ten) {
                 editable.insert(start, "10");
+                calculate(harp1, harp2);
+
 //            } else if (primaryCode == 10) {
 //                editable.insert(start, " ");
 //                editable.insert(start + 1, "\n");
 //                editable.insert(start + 2, " ");
             } else { // insert character
                 editable.insert(start, Character.toString((char) primaryCode));
+                calculate(harp1, harp2);
 
             }
         }

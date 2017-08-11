@@ -1,6 +1,7 @@
 package com.example.user.helpharp;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,21 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 
 public class MainActivity extends AppCompatActivity {
-    Harp harp1 = new Harp();
-    Harp harp2 = new Harp();
+    public static Harp harp1 = new Harp();
+    public static Harp harp2 = new Harp();
     CustomKeyboard mCustomKeyboard;
     public static ArrayList<String> list = new ArrayList<String>();
     public static ArrayList<Integer> tempArray = new ArrayList<>();
-    EditText enterTab;
-    TextView result;
+    static EditText enterTab;
+    static TextView result;
     public static Hole final_tabs;
-    int temp;
+    static int temp;
     static int octava_set = 0;
 
 
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void start_activity() {
-        Button my_harm_key, need_harm_key, actionCount, btncopy, btncopy2, newactivity;
+        final Button my_harm_key, need_harm_key, actionCount, btncopy, btncopy2, newactivity;
         final TextView my_harm_key_view = (TextView) findViewById(R.id.view_n);
         final TextView need_harm_key_view = (TextView) findViewById(R.id.view_z);
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button octava_plus = (Button) findViewById(R.id.octava_plus);
         final Button octava_minus = (Button) findViewById(R.id.octava_minus);
+
         octava_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,10 +128,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //-----------------------------------------------
-
-
+//        RESET!
+        Button reset = (Button) findViewById(R.id.reset_id);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                finish();
+                overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
+//-----------------------------------------------
         // -------Spiner
-        // Получаем экземпляр элемента Spinner
         final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
 // Настраиваем адаптер
         ArrayAdapter<?> adapter =
@@ -144,14 +157,20 @@ public class MainActivity extends AppCompatActivity {
 
                 if (choose[selectedItemPosition].equals("Рихтеровская")) {
                     harp2.stroi = "Рихтеровская";
+                    harp2.makeharp(harp2.stroi, harp2.position, need_harm_key_view);
+                    calculate(harp1, harp2);
 
                 }
                 if (choose[selectedItemPosition].equals("Падди")) {
                     harp2.stroi = "Падди";
+                    harp2.makeharp(harp2.stroi, harp2.position, need_harm_key_view);
+                    calculate(harp1, harp2);
 
                 }
                 if (choose[selectedItemPosition].equals("Кантри")) {
                     harp2.stroi = "Кантри";
+                    harp2.makeharp(harp2.stroi, harp2.position, need_harm_key_view);
+                    calculate(harp1, harp2);
 
                 }
             }
@@ -160,9 +179,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //-----------------------------------------------
-
         // -------Spiner
-        // Получаем экземпляр элемента Spinner
         final Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
 // Вызываем адаптер
         spinner1.setAdapter(adapter);
@@ -173,21 +190,31 @@ public class MainActivity extends AppCompatActivity {
                 String[] choose = getResources().getStringArray(R.array.harmonica_stroi);
                 if (choose[selectedItemPosition].equals("Рихтеровская")) {
                     harp1.stroi = "Рихтеровская";
+                    harp1.makeharp(harp1.stroi, harp1.position, need_harm_key_view);
+                    calculate(harp1, harp2);
                 }
                 if (choose[selectedItemPosition].equals("Падди")) {
                     harp1.stroi = "Падди";
+                    harp1.makeharp(harp1.stroi, harp1.position, need_harm_key_view);
+                    calculate(harp1, harp2);
                 }
                 if (choose[selectedItemPosition].equals("Кантри")) {
                     harp1.stroi = "Кантри";
+                    harp1.makeharp(harp1.stroi, harp1.position, need_harm_key_view);
+                    calculate(harp1, harp2);
                 }
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+//-----------------------------------------------
+
+
+
     } /*end of start activity*/
 
-    private void calculate(Harp harp1, Harp harp2) {
+    public static void calculate(Harp harp1, Harp harp2) {
         try {
             if (harp1.allnote.isEmpty() || harp2.allnote.isEmpty()) {
                 return;
@@ -202,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void changetabs(Harp harp1, Harp harp2) {
+    public static void changetabs(Harp harp1, Harp harp2) {
         try {
             tempArray.clear();
             String rezultat = "";
@@ -236,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private int check_temp(int n, int z) {
+    private static int check_temp(int n, int z) {
         int temp = z - n;
         int[] nums = {-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11};
         for (int i : nums) {
@@ -247,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return temp;
     }
-
 
 
     @Override
@@ -369,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Ввод исходных табов от пользователя
-    public void input_tabs(String inputtabs) {
+    public static void input_tabs(String inputtabs) {
         String str[] = inputtabs.split(" ");
 
         int i = 0;
@@ -389,8 +415,6 @@ public class MainActivity extends AppCompatActivity {
         }
         result.setText(temp);
     }
-
-
 
 
 }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity {
         result = (TextView) findViewById(R.id.text_view_result);
         enterTab = (EditText) findViewById(R.id.edit_text_enter_tabl);
 
-
         start_activity();
-
-
     }
 
 
@@ -59,6 +56,21 @@ public class MainActivity extends AppCompatActivity {
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
         actionCount = (Button) findViewById(R.id.button_action_count);
+
+
+        newactivity = (Button) findViewById(R.id.button);
+        newactivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                mBuilder.setTitle("Setting:");
+                AlertDialog alertDialog = mBuilder.create();
+                alertDialog.show();
+
+            }
+        });
+
+
 
 
         Button octava_plus = (Button) findViewById(R.id.octava_plus);
@@ -190,17 +202,17 @@ public class MainActivity extends AppCompatActivity {
                 String[] choose = getResources().getStringArray(R.array.harmonica_stroi);
                 if (choose[selectedItemPosition].equals("Рихтеровская")) {
                     harp1.stroi = "Рихтеровская";
-                    harp1.makeharp(harp1.stroi, harp1.position, need_harm_key_view);
+                    harp1.makeharp(harp1.stroi, harp1.position, my_harm_key_view);
                     calculate(harp1, harp2);
                 }
                 if (choose[selectedItemPosition].equals("Падди")) {
                     harp1.stroi = "Падди";
-                    harp1.makeharp(harp1.stroi, harp1.position, need_harm_key_view);
+                    harp1.makeharp(harp1.stroi, harp1.position, my_harm_key_view);
                     calculate(harp1, harp2);
                 }
                 if (choose[selectedItemPosition].equals("Кантри")) {
                     harp1.stroi = "Кантри";
-                    harp1.makeharp(harp1.stroi, harp1.position, need_harm_key_view);
+                    harp1.makeharp(harp1.stroi, harp1.position, my_harm_key_view);
                     calculate(harp1, harp2);
                 }
             }
@@ -315,66 +327,78 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.button0:
                         harp.position = 0;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
 
                     case R.id.button1:
                         harp.position = 1;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
 
                     case R.id.button2:
                         harp.position = 2;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
 
                     case R.id.button3:
                         harp.position = 3;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
 
                     case R.id.button4:
                         harp.position = 4;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
                     case R.id.button5:
                         harp.position = 5;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
                     case R.id.button6:
                         harp.position = 6;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
                     case R.id.button7:
                         harp.position = 7;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
                     case R.id.button8:
                         harp.position = 8;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
 
                     case R.id.button9:
                         harp.position = 9;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
                     case R.id.button10:
                         harp.position = 10;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
                     case R.id.button11:
                         harp.position = 11;
                         harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                        calculate(harp1, harp2);
                         dialog.dismiss();
                         break;
                 }

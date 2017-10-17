@@ -7,7 +7,7 @@ import static com.example.user.helpharp.Hole.make_list;
 public class Harp {
 
     String key_of_harp;
-    String stroi="Рихтеровская";
+    String stroi = "";
     int position=5;
     public ArrayList allnote = new ArrayList();
 

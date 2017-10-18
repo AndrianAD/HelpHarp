@@ -20,6 +20,16 @@ public class Harp {
         textView.setText(key_of_harp);
 
     }
+
+    public void makeharp(String stroi, int position) {
+        allnote = make_list(stroi, position);
+        Hole hole = (Hole) allnote.get(0);
+        key_of_harp = hole.getNote();
+        this.stroi = stroi;
+        this.position = position;
+    }
+
+
     public String printlist(ArrayList list,TextView textView){
         String temp="";
             Hole hole;

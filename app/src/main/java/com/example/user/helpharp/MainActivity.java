@@ -1,12 +1,16 @@
 package com.example.user.helpharp;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     static EditText enterTab;
     static TextView result;
     public static Hole final_tabs;
-    static int temp;
     static int octava_set = 0;
+
 
 
     @Override
@@ -45,27 +51,62 @@ public class MainActivity extends AppCompatActivity {
         result = (TextView) findViewById(R.id.text_view_result);
         enterTab = (EditText) findViewById(R.id.edit_text_enter_tabl);
 
+
         start_activity();
     }
 
 
     public void start_activity() {
-        final Button my_harm_key, need_harm_key, actionCount, btncopy, btncopy2, newactivity;
+        final Button my_harm_key, need_harm_key, actionCount, btncopy_enter, btncopy_result, newactivity;
         final TextView my_harm_key_view = (TextView) findViewById(R.id.view_n);
         final TextView need_harm_key_view = (TextView) findViewById(R.id.view_z);
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
         actionCount = (Button) findViewById(R.id.button_action_count);
 
+        btncopy_enter = (Button) findViewById(R.id.button_copy);
+        btncopy_enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = enterTab.getText().toString();
+                ClipboardManager clipboardManager;
+                ClipData clipData;
+                clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                clipData = ClipData.newPlainText("text", text);
+                clipboardManager.setPrimaryClip(clipData);
+                Toast toast = Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        });
+
+
+        btncopy_result = (Button) findViewById(R.id.button_copy2);
+        btncopy_result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = result.getText().toString();
+                ClipboardManager clipboardManager;
+                ClipData clipData;
+                clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                clipData = ClipData.newPlainText("text", text);
+                clipboardManager.setPrimaryClip(clipData);
+                Toast toast = Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        });
+
+
+
 
         newactivity = (Button) findViewById(R.id.button);
         newactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                mBuilder.setTitle("Setting:");
-                AlertDialog alertDialog = mBuilder.create();
-                alertDialog.show();
+                Intent myIntent = new Intent(MainActivity.this, Activity2.class);
+                startActivity(myIntent);
+
 
             }
         });
@@ -245,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             tempArray.clear();
             String rezultat = "";
-            temp = check_temp(harp1.position, harp2.position);
+            int temp = check_temp(harp1.position, harp2.position);
             for (int i = 0; i < list.size(); i++) {
                 String list_i = list.get(i);
                 if (list_i.contains("\n"))
@@ -275,16 +316,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private static int check_temp(int n, int z) {
-        int temp = z - n;
+    public static int check_temp(int n, int z) {
+        int temps = z - n;
         int[] nums = {-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11};
         for (int i : nums) {
-            if (temp == i) {
-                temp = 12 - (-i);
+            if (temps == i) {
+                temps = 12 - (-i);
                 break;
             }
         }
-        return temp;
+        return temps;
     }
 
 

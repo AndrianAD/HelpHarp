@@ -7,4 +7,22 @@
         <item>Падди</item>
         <item>Кантри</item>
     </string-array>
+
+
+    <string-array name="harmonica_key">
+        <item>G </item>
+        <item>Ab</item>
+        <item>A</item>
+        <item>Bb</item>
+        <item>B</item>
+        <item>C</item>
+        <item>C#</item>
+        <item>D</item>
+        <item>Eb</item>
+        <item>E</item>
+        <item>F</item>
+        <item>F#</item>
+    </string-array>
+
+
 </resources>

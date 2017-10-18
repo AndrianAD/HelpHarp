@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/switch_check_box_major"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Мажорная гамма" />
+
+    <TextView
+        android:id="@+id/gamma_major"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <CheckBox
+        android:id="@+id/switch_check_box_minor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Минорманя гамма" />
+
+    <TextView
+        android:id="@+id/gamma_minor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <CheckBox
+        android:id="@+id/switch_check_box_blues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Блюзовая гамма" />
+
+    <TextView
+        android:id="@+id/gamma_blues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <CheckBox
+        android:id="@+id/checkBox_penta_minor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Минорная пентатоника" />
+
+    <TextView
+        android:id="@+id/penta_minor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/button_ton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change_Ton" />
+
+
+    <!--<Spinner-->
+    <!--android:id="@+id/spinner1"-->
+    <!--android:layout_width="395dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:entries="@array/harmonica_key"-->
+    <!--/>-->
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/harmonica_key" />
+
+</LinearLayout>

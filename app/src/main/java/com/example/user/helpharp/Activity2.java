@@ -11,20 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import static com.example.user.helpharp.MainActivity.check_temp;
-
-/**
- * Created by User on 171018.
- */
+import static com.example.user.helpharp.MainActivity.harp2;
 
 public class Activity2 extends Activity {
-    public static TextView major, minor, blues, penta_minor;
+    TextView major, minor, blues, penta_minor;
     static String gammaview = " ";
     private Button button_ton;
     Harp harp = new Harp();
@@ -35,6 +28,8 @@ public class Activity2 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2);
         harp.makeharp("Рихтеровская", 5);
+        harp2.makeharp("Рихтеровская", 5);
+
         major = (TextView) findViewById(R.id.gamma_major);
         minor = (TextView) findViewById(R.id.gamma_minor);
         blues = (TextView) findViewById(R.id.gamma_blues);
@@ -64,17 +59,42 @@ public class Activity2 extends Activity {
                 String[] choose = getResources().getStringArray(R.array.harmonica_key);
 
                 if (choose[selectedItemPosition].equals("G")) {
-                    harp.makeharp("Рихтеровская", 0);
-
+                    harp2.makeharp("Рихтеровская", 0);
                 }
                 if (choose[selectedItemPosition].equals("Ab")) {
-
-                    harp.makeharp("Рихтеровская", 1);
+                    harp2.makeharp("Рихтеровская", 1);
                 }
                 if (choose[selectedItemPosition].equals("A")) {
-                    harp.makeharp("Рихтеровская", 2);
-
+                    harp2.makeharp("Рихтеровская", 2);
                 }
+                if (choose[selectedItemPosition].equals("Bb")) {
+                    harp2.makeharp("Рихтеровская", 3);
+                }
+                if (choose[selectedItemPosition].equals("B")) {
+                    harp2.makeharp("Рихтеровская", 4);
+                }
+                if (choose[selectedItemPosition].equals("C")) {
+                    harp2.makeharp("Рихтеровская", 5);
+                }
+                if (choose[selectedItemPosition].equals("C#")) {
+                    harp2.makeharp("Рихтеровская", 6);
+                }
+                if (choose[selectedItemPosition].equals("D")) {
+                    harp2.makeharp("Рихтеровская", 7);
+                }
+                if (choose[selectedItemPosition].equals("Eb")) {
+                    harp2.makeharp("Рихтеровская", 8);
+                }
+                if (choose[selectedItemPosition].equals("E")) {
+                    harp2.makeharp("Рихтеровская", 9);
+                }
+                if (choose[selectedItemPosition].equals("F")) {
+                    harp2.makeharp("Рихтеровская", 10);
+                }
+                if (choose[selectedItemPosition].equals("F#")) {
+                    harp2.makeharp("Рихтеровская", 11);
+                }
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -148,11 +168,11 @@ public class Activity2 extends Activity {
     public void getGamma_major(boolean isChecked) {
         int j = 0;
         int int_masiv = 0;
-        int temp = check_temp(harp.position, 0);
+        int temp = check_temp(harp.position, harp2.position);
         final int[] masiv = {2, 2, 1, 2, 2, 2, 1};
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
-            Hole nots = (Hole) harp.allnote.get(i);
+            Hole nots = (Hole) harp.allnote.get(i + temp);
             Hole tabs = (Hole) harp.allnote.get(i + temp);
             j++;
             if (j == 7) {

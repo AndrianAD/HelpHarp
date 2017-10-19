@@ -32,13 +32,71 @@ public class Activity2 extends Activity {
         penta_major = (TextView) findViewById(R.id.penta_major);
 
 
-        // -------Spiner
-        final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
+// -------Spiner1
+        final Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
 // Настраиваем адаптер
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this, R.array.harmonica_key, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Вызываем адаптер
+        spinner1.setAdapter(adapter);
+        spinner1.setSelection(5);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+
+                String[] choose = getResources().getStringArray(R.array.harmonica_key);
+
+                if (choose[selectedItemPosition].equals("G")) {
+                    harp.makeharp("Рихтеровская", 0);
+                }
+                if (choose[selectedItemPosition].equals("Ab")) {
+                    harp.makeharp("Рихтеровская", 1);
+                }
+                if (choose[selectedItemPosition].equals("A")) {
+                    harp.makeharp("Рихтеровская", 2);
+                }
+                if (choose[selectedItemPosition].equals("Bb")) {
+                    harp.makeharp("Рихтеровская", 3);
+                }
+                if (choose[selectedItemPosition].equals("B")) {
+                    harp.makeharp("Рихтеровская", 4);
+                }
+                if (choose[selectedItemPosition].equals("C")) {
+                    harp.makeharp("Рихтеровская", 5);
+                }
+                if (choose[selectedItemPosition].equals("C#")) {
+                    harp.makeharp("Рихтеровская", 6);
+                }
+                if (choose[selectedItemPosition].equals("D")) {
+                    harp.makeharp("Рихтеровская", 7);
+                }
+                if (choose[selectedItemPosition].equals("Eb")) {
+                    harp.makeharp("Рихтеровская", 8);
+                }
+                if (choose[selectedItemPosition].equals("E")) {
+                    harp.makeharp("Рихтеровская", 9);
+                }
+                if (choose[selectedItemPosition].equals("F")) {
+                    harp.makeharp("Рихтеровская", 10);
+                }
+                if (choose[selectedItemPosition].equals("F#")) {
+                    harp.makeharp("Рихтеровская", 11);
+                }
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // -------Spiner2
+        final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
+// Настраиваем адаптер
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Вызываем адаптер
         spinner2.setAdapter(adapter);
+        spinner2.setSelection(5);
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {

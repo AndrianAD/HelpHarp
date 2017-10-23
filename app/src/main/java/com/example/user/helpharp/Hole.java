@@ -9,10 +9,7 @@ public class Hole {
         this.tabs = tabs.getTab();
         this.note = note.getNota();
     }
-
-
     static Note[] masiv_note;
-    public static ArrayList noteList = new ArrayList();
 
     public static ArrayList make_list(String stroi, int position) {
         chek_stroi(stroi);
@@ -23,6 +20,19 @@ public class Hole {
         }
         return temp_noteList;
     }
+
+    public static ArrayList make_all_list() {
+        ArrayList temp_noteList = new ArrayList();
+        chek_stroi("Рихтеровская");
+        for (int i = 0; i < masiv_note.length; i++) {
+            Hole hole = new Hole(masiv_note[i], masiv_note[i]);
+            temp_noteList.add(hole);
+        }
+
+        return temp_noteList;
+
+    }
+
 
     private static void chek_stroi(String stroi) {
         if (stroi == "Рихтеровская") {

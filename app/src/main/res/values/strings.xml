@@ -10,18 +10,18 @@
 
 
     <string-array name="harmonica_key">
-        <item>G </item>
-        <item>Ab</item>
-        <item>A</item>
-        <item>Bb</item>
-        <item>B</item>
-        <item>C</item>
-        <item>C#</item>
+        <item>C </item>
+        <item>G</item>
         <item>D</item>
-        <item>Eb</item>
+        <item>A</item>
         <item>E</item>
-        <item>F</item>
+        <item>B</item>
         <item>F#</item>
+        <item>C#</item>
+        <item>Ab</item>
+        <item>Eb</item>
+        <item>Bb</item>
+        <item>F</item>
     </string-array>
 
 

@@ -1,6 +1,7 @@
 package com.example.user.helpharp;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +10,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import static com.example.user.helpharp.MainActivity.check_temp;
 
 public class Activity2 extends Activity {
@@ -22,6 +26,7 @@ public class Activity2 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         harp.makeharp("Рихтеровская", 5);
         harp2.makeharp("Рихтеровская", 5);
 
@@ -39,7 +44,6 @@ public class Activity2 extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Вызываем адаптер
         spinner1.setAdapter(adapter);
-        spinner1.setSelection(5);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {
@@ -48,39 +52,99 @@ public class Activity2 extends Activity {
 
                 if (choose[selectedItemPosition].equals("G")) {
                     harp.makeharp("Рихтеровская", 0);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Ab")) {
                     harp.makeharp("Рихтеровская", 1);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("A")) {
                     harp.makeharp("Рихтеровская", 2);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Bb")) {
                     harp.makeharp("Рихтеровская", 3);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("B")) {
                     harp.makeharp("Рихтеровская", 4);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("C")) {
                     harp.makeharp("Рихтеровская", 5);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("C#")) {
                     harp.makeharp("Рихтеровская", 6);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("D")) {
                     harp.makeharp("Рихтеровская", 7);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Eb")) {
                     harp.makeharp("Рихтеровская", 8);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("E")) {
                     harp.makeharp("Рихтеровская", 9);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("F")) {
                     harp.makeharp("Рихтеровская", 10);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("F#")) {
                     harp.makeharp("Рихтеровская", 11);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
 
             }
@@ -96,7 +160,6 @@ public class Activity2 extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Вызываем адаптер
         spinner2.setAdapter(adapter);
-        spinner2.setSelection(5);
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {
@@ -105,39 +168,99 @@ public class Activity2 extends Activity {
 
                 if (choose[selectedItemPosition].equals("G")) {
                     harp2.makeharp("Рихтеровская", 0);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Ab")) {
                     harp2.makeharp("Рихтеровская", 1);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("A")) {
                     harp2.makeharp("Рихтеровская", 2);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Bb")) {
                     harp2.makeharp("Рихтеровская", 3);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("B")) {
                     harp2.makeharp("Рихтеровская", 4);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("C")) {
                     harp2.makeharp("Рихтеровская", 5);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("C#")) {
                     harp2.makeharp("Рихтеровская", 6);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("D")) {
                     harp2.makeharp("Рихтеровская", 7);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Eb")) {
                     harp2.makeharp("Рихтеровская", 8);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("E")) {
                     harp2.makeharp("Рихтеровская", 9);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("F")) {
                     harp2.makeharp("Рихтеровская", 10);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("F#")) {
                     harp2.makeharp("Рихтеровская", 11);
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
 
             }
@@ -217,7 +340,7 @@ public class Activity2 extends Activity {
 
     public void getGamma_major(boolean isChecked) {
         int j = 0;
-        int int_masiv = 0;
+        int int_masiv;
         int temp = check_temp(harp.position, harp2.position);
         final int[] masiv = {2, 2, 1, 2, 2, 2, 1};
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {

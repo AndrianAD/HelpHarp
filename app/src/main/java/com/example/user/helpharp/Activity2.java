@@ -485,7 +485,6 @@ public class Activity2 extends Activity {
         gammaview = "";
     }
 
-
     public void get_major_pentatonic(boolean isChecked) {
         int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();

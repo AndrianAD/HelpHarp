@@ -84,33 +84,31 @@
 
         <TextView
             android:id="@+id/txt_spiner1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:padding="10dp"
             android:text="YOUR KEY" />
 
         <Spinner
             android:id="@+id/spinner1"
-            android:padding="10dp"
             android:layout_width="wrap_content"
+            android:padding="5dp"
             android:layout_height="wrap_content"
             android:entries="@array/harmonica_key" />
 
         <TextView
             android:id="@+id/txt_spiner2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:padding="10dp"
             android:text="CHANGE KEY"
             android:textSize="10sp" />
 
         <Spinner
             android:id="@+id/spinner2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:padding="5dp"
             android:entries="@array/harmonica_key" />
 
     </LinearLayout>

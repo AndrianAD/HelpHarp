@@ -337,23 +337,19 @@ public class Activity2 extends Activity {
     }
 
     public void getGamma_major(boolean isChecked) {
-        int j = 0;
-        int int_masiv;
+        int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
         int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {2, 2, 1, 2, 2, 2, 1};
 
         for (int i = temp; i > 0; i = i - int_masiv) {
-            int_masiv = masiv[j + 2];
+            int_masiv = masiv[j + 6];
             if (i - int_masiv < 0) {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
             Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
-            j++;
-            if (j == 4) {
-                j = 0;
-            }
+            j--;
             stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
         }
 
@@ -380,23 +376,19 @@ public class Activity2 extends Activity {
 
 
     public void getGamma_minor(boolean isChecked) {
-        int j = 0;
-        int int_masiv;
+        int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
         int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {2, 1, 2, 2, 1, 2, 2};
 
         for (int i = temp; i > 0; i = i - int_masiv) {
-            int_masiv = masiv[j + 2];
+            int_masiv = masiv[j + 6];
             if (i - int_masiv < 0) {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
             Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
-            j++;
-            if (j == 4) {
-                j = 0;
-            }
+            j--;
             stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
         }
         gammaview = String.valueOf(stringBuilder) + " T ";
@@ -421,23 +413,19 @@ public class Activity2 extends Activity {
 
 
     public void getGamma_blues(boolean isChecked) {
-        int j = 0;
-        int int_masiv;
+        int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
         int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {3, 2, 1, 1, 3, 2};
 
         for (int i = temp; i > 0; i = i - int_masiv) {
-            int_masiv = masiv[j + 2];
+            int_masiv = masiv[j + 5];
             if (i - int_masiv < 0) {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
             Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
-            j++;
-            if (j == 3) {
-                j = 0;
-            }
+            j--;
             stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
         }
         gammaview = String.valueOf(stringBuilder) + " T ";
@@ -460,11 +448,28 @@ public class Activity2 extends Activity {
         gammaview = "";
     }
 
+
     public void get_minor_pentatonic(boolean isChecked) {
-        int j = 0;
-        int int_masiv = 0;
+        int j = 0, int_masiv;
+        StringBuilder stringBuilder = new StringBuilder();
         int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {3, 2, 2, 3, 2};
+
+        for (int i = temp; i > 0; i = i - int_masiv) {
+            int_masiv = masiv[j + 4];
+            if (i - int_masiv < 0) {
+                break;
+            }
+            Hole nots = (Hole) harp.allnote.get(i - int_masiv);
+            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
+            j--;
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+        }
+        gammaview = String.valueOf(stringBuilder) + " T ";
+        penta_minor.setText(gammaview);
+
+
+        j = 0;
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
@@ -475,15 +480,33 @@ public class Activity2 extends Activity {
             }
             gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
         }
+
         penta_minor.setText(gammaview);
         gammaview = "";
     }
 
+
     public void get_major_pentatonic(boolean isChecked) {
-        int j = 0;
-        int int_masiv = 0;
+        int j = 0, int_masiv;
+        StringBuilder stringBuilder = new StringBuilder();
         int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {2, 2, 3, 2, 3};
+
+        for (int i = temp; i > 0; i = i - int_masiv) {
+            int_masiv = masiv[j + 4];
+            if (i - int_masiv < 0) {
+                break;
+            }
+            Hole nots = (Hole) harp.allnote.get(i - int_masiv);
+            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
+            j--;
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+        }
+        gammaview = String.valueOf(stringBuilder) + " T ";
+        penta_major.setText(gammaview);
+
+
+        j = 0;
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
@@ -494,6 +517,7 @@ public class Activity2 extends Activity {
             }
             gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
         }
+
         penta_major.setText(gammaview);
         gammaview = "";
     }

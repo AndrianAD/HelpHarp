@@ -23,7 +23,7 @@
         android:id="@+id/switch_check_box_minor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Минорманя гамма" />
+        android:text="Минорная гамма" />
 
     <TextView
         android:padding="10dp"

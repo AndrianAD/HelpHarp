@@ -11,15 +11,13 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import static com.example.user.helpharp.MainActivity.check_temp;
 
 public class Activity2 extends Activity {
     TextView major, minor, blues, penta_minor, penta_major;
     static String gammaview = " ";
     Harp harp = new Harp();
-    int position = 5;
+    int out_spiner2 = 5;
 
 
     @Override
@@ -167,40 +165,100 @@ public class Activity2 extends Activity {
                 String[] choose = getResources().getStringArray(R.array.harmonica_key);
 
                 if (choose[selectedItemPosition].equals("G")) {
-                    position = 0;
+                    out_spiner2 = 0;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Ab")) {
-                    position = 1;
+                    out_spiner2 = 1;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("A")) {
-                    position = 2;
+                    out_spiner2 = 2;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Bb")) {
-                    position = 3;
+                    out_spiner2 = 3;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("B")) {
-                    position = 4;
+                    out_spiner2 = 4;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("C")) {
-                    position = 5;
+                    out_spiner2 = 5;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("C#")) {
-                    position = 6;
+                    out_spiner2 = 6;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("D")) {
-                    position = 7;
+                    out_spiner2 = 7;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("Eb")) {
-                    position = 8;
+                    out_spiner2 = 8;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("E")) {
-                    position = 9;
+                    out_spiner2 = 9;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("F")) {
-                    position = 10;
+                    out_spiner2 = 10;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
                 if (choose[selectedItemPosition].equals("F#")) {
-                    position = 11;
+                    out_spiner2 = 11;
+                    get_minor_pentatonic(false);
+                    get_major_pentatonic(false);
+                    getGamma_blues(false);
+                    getGamma_major(false);
+                    getGamma_minor(false);
                 }
 
             }
@@ -281,8 +339,29 @@ public class Activity2 extends Activity {
     public void getGamma_major(boolean isChecked) {
         int j = 0;
         int int_masiv;
-        int temp = check_temp(harp.position, position);
+        StringBuilder stringBuilder = new StringBuilder();
+        int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {2, 2, 1, 2, 2, 2, 1};
+
+        for (int i = temp; i > 0; i = i - int_masiv) {
+            int_masiv = masiv[j + 2];
+            if (i - int_masiv < 0) {
+                break;
+            }
+            Hole nots = (Hole) harp.allnote.get(i - int_masiv);
+            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
+            j++;
+            if (j == 4) {
+                j = 0;
+            }
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+        }
+
+        gammaview = String.valueOf(stringBuilder);
+        major.setText(gammaview);
+
+
+        j = 0;
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
@@ -293,6 +372,7 @@ public class Activity2 extends Activity {
             }
             gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
         }
+
         major.setText(gammaview);
         gammaview = "";
     }
@@ -301,7 +381,7 @@ public class Activity2 extends Activity {
     public void getGamma_minor(boolean isChecked) {
         int j = 0;
         int int_masiv = 0;
-        int temp = check_temp(harp.position, position);
+        int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {2, 1, 2, 2, 1, 2, 2};
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
@@ -320,7 +400,7 @@ public class Activity2 extends Activity {
     public void getGamma_blues(boolean isChecked) {
         int j = 0;
         int int_masiv = 0;
-        int temp = check_temp(harp.position, position);
+        int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {3, 2, 1, 1, 3, 2};
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
@@ -339,7 +419,7 @@ public class Activity2 extends Activity {
     public void get_minor_pentatonic(boolean isChecked) {
         int j = 0;
         int int_masiv = 0;
-        int temp = check_temp(harp.position, position);
+        int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {3, 2, 2, 3, 2};
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
@@ -358,7 +438,7 @@ public class Activity2 extends Activity {
     public void get_major_pentatonic(boolean isChecked) {
         int j = 0;
         int int_masiv = 0;
-        int temp = check_temp(harp.position, position);
+        int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {2, 2, 3, 2, 3};
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];

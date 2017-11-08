@@ -34,6 +34,7 @@ public class Hole {
     }
 
 
+
     private static void chek_stroi(String stroi) {
         if (stroi == "Рихтеровская") {
             masiv_note = new Note[]{
@@ -84,6 +85,7 @@ public class Hole {
     }
 
 
+
     public String getNote() {
         return note;
     }
@@ -94,3 +96,5 @@ public class Hole {
 
 
 }
+
+

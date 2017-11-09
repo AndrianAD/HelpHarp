@@ -11,6 +11,9 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.example.user.helpharp.MainActivity.check_temp;
 
 public class Activity2 extends Activity {
@@ -18,7 +21,22 @@ public class Activity2 extends Activity {
     static String gammaview = " ";
     Harp harp = new Harp();
     int out_spiner2 = 5;
-
+    private static final Map<String, Integer> mapNotes = new HashMap<String, Integer>() {
+        {
+            put("G", 0);
+            put("Ab", 1);
+            put("A", 2);
+            put("Bb", 3);
+            put("B", 4);
+            put("C", 5);
+            put("C#", 6);
+            put("D", 7);
+            put("Eb", 8);
+            put("E", 9);
+            put("F", 10);
+            put("F#", 11);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +53,7 @@ public class Activity2 extends Activity {
         penta_major = (TextView) findViewById(R.id.penta_major);
 
 
-// -------Spiner1
+        // -------Spiner1
         final Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
 // Настраиваем адаптер
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this, R.array.harmonica_key, android.R.layout.simple_spinner_item);
@@ -47,110 +65,18 @@ public class Activity2 extends Activity {
                                        View itemSelected, int selectedItemPosition, long selectedId) {
 
                 String[] choose = getResources().getStringArray(R.array.harmonica_key);
-
-                if (choose[selectedItemPosition].equals("G")) {
-                    harp.makeharp("Рихтеровская", 0);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("Ab")) {
-                    harp.makeharp("Рихтеровская", 1);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("A")) {
-                    harp.makeharp("Рихтеровская", 2);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("Bb")) {
-                    harp.makeharp("Рихтеровская", 3);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("B")) {
-                    harp.makeharp("Рихтеровская", 4);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("C")) {
-                    harp.makeharp("Рихтеровская", 5);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("C#")) {
-                    harp.makeharp("Рихтеровская", 6);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("D")) {
-                    harp.makeharp("Рихтеровская", 7);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("Eb")) {
-                    harp.makeharp("Рихтеровская", 8);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("E")) {
-                    harp.makeharp("Рихтеровская", 9);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("F")) {
-                    harp.makeharp("Рихтеровская", 10);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("F#")) {
-                    harp.makeharp("Рихтеровская", 11);
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-
+                String mychoose = choose[selectedItemPosition];
+                if (mapNotes.containsKey(mychoose)) ;
+                int note = mapNotes.get(mychoose);
+                harp.makeharp("Рихтеровская", note);
+                getAllScales();
             }
 
+            @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
+
 
         // -------Spiner2
         final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
@@ -163,112 +89,18 @@ public class Activity2 extends Activity {
                                        View itemSelected, int selectedItemPosition, long selectedId) {
 
                 String[] choose = getResources().getStringArray(R.array.harmonica_key);
-
-                if (choose[selectedItemPosition].equals("G")) {
-                    out_spiner2 = 0;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("Ab")) {
-                    out_spiner2 = 1;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("A")) {
-                    out_spiner2 = 2;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("Bb")) {
-                    out_spiner2 = 3;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("B")) {
-                    out_spiner2 = 4;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("C")) {
-                    out_spiner2 = 5;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("C#")) {
-                    out_spiner2 = 6;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("D")) {
-                    out_spiner2 = 7;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("Eb")) {
-                    out_spiner2 = 8;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("E")) {
-                    out_spiner2 = 9;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("F")) {
-                    out_spiner2 = 10;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-                if (choose[selectedItemPosition].equals("F#")) {
-                    out_spiner2 = 11;
-                    get_minor_pentatonic(false);
-                    get_major_pentatonic(false);
-                    getGamma_blues(false);
-                    getGamma_major(false);
-                    getGamma_minor(false);
-                }
-
+                String mychoose = choose[selectedItemPosition];
+                if (mapNotes.containsKey(mychoose)) ;
+                out_spiner2 = mapNotes.get(mychoose);
+                getAllScales();
             }
 
+            @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
-//
+
 //        // Чекбокс мажор
         CheckBox switchCheckBox_major = (CheckBox) findViewById(R.id.switch_check_box_major);
         switchCheckBox_major.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -277,7 +109,6 @@ public class Activity2 extends Activity {
                 if (harp.allnote.isEmpty()) {
                     return;
                 }
-
                 getGamma_major(isChecked);
             }
         });
@@ -329,13 +160,9 @@ public class Activity2 extends Activity {
                 get_major_pentatonic(isChecked);
             }
         });
-
-
-
-
-
     }
 
+    //----------------------------------------------------------
     public void getGamma_major(boolean isChecked) {
         int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
@@ -348,9 +175,8 @@ public class Activity2 extends Activity {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
-            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
             j--;
-            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : nots.getTabs() + " ");
         }
 
         gammaview = String.valueOf(stringBuilder) + " T ";
@@ -361,20 +187,17 @@ public class Activity2 extends Activity {
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
-            Hole tabs = (Hole) harp.allnote.get(i + temp);
             j++;
             if (j == 7) {
                 j = 0;
             }
-            gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
+            gammaview += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";
         }
-
         major.setText(gammaview);
         gammaview = "";
     }
 
-
-
+    //----------------------------------------------------------
     public void getGamma_minor(boolean isChecked) {
         int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
@@ -387,9 +210,8 @@ public class Activity2 extends Activity {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
-            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
             j--;
-            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : nots.getTabs() + " ");
         }
         gammaview = String.valueOf(stringBuilder) + " T ";
         minor.setText(gammaview);
@@ -399,19 +221,17 @@ public class Activity2 extends Activity {
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
-            Hole tabs = (Hole) harp.allnote.get(i + temp);
             j++;
             if (j == 7) {
                 j = 0;
             }
-            gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
+            gammaview += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";
         }
-
         minor.setText(gammaview);
         gammaview = "";
     }
 
-
+    //----------------------------------------------------------
     public void getGamma_blues(boolean isChecked) {
         int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
@@ -424,9 +244,8 @@ public class Activity2 extends Activity {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
-            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
             j--;
-            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : nots.getTabs() + " ");
         }
         gammaview = String.valueOf(stringBuilder) + " T ";
         blues.setText(gammaview);
@@ -436,19 +255,18 @@ public class Activity2 extends Activity {
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
-            Hole tabs = (Hole) harp.allnote.get(i + temp);
             j++;
             if (j == 6) {
                 j = 0;
             }
-            gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
+            gammaview += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";
         }
 
         blues.setText(gammaview);
         gammaview = "";
     }
 
-
+    //----------------------------------------------------------
     public void get_minor_pentatonic(boolean isChecked) {
         int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
@@ -461,9 +279,8 @@ public class Activity2 extends Activity {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
-            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
             j--;
-            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : nots.getTabs() + " ");
         }
         gammaview = String.valueOf(stringBuilder) + " T ";
         penta_minor.setText(gammaview);
@@ -473,18 +290,18 @@ public class Activity2 extends Activity {
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
-            Hole tabs = (Hole) harp.allnote.get(i + temp);
             j++;
             if (j == 5) {
                 j = 0;
             }
-            gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
+            gammaview += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";
         }
 
         penta_minor.setText(gammaview);
         gammaview = "";
     }
 
+    //----------------------------------------------------------
     public void get_major_pentatonic(boolean isChecked) {
         int j = 0, int_masiv;
         StringBuilder stringBuilder = new StringBuilder();
@@ -497,9 +314,8 @@ public class Activity2 extends Activity {
                 break;
             }
             Hole nots = (Hole) harp.allnote.get(i - int_masiv);
-            Hole tabs = (Hole) harp.allnote.get(i - int_masiv);
             j--;
-            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : tabs.getTabs() + " ");
+            stringBuilder.insert(0, isChecked ? nots.getNote() + " " : nots.getTabs() + " ");
         }
         gammaview = String.valueOf(stringBuilder) + " T ";
         penta_major.setText(gammaview);
@@ -509,16 +325,24 @@ public class Activity2 extends Activity {
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
             Hole nots = (Hole) harp.allnote.get(i + temp);
-            Hole tabs = (Hole) harp.allnote.get(i + temp);
             j++;
             if (j == 5) {
                 j = 0;
             }
-            gammaview += isChecked ? nots.getNote() + " " : tabs.getTabs() + " ";
+            gammaview += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";
         }
 
         penta_major.setText(gammaview);
         gammaview = "";
+    }
+
+    //----------------------------------------------------------
+    private void getAllScales() {
+        get_minor_pentatonic(false);
+        get_major_pentatonic(false);
+        getGamma_blues(false);
+        getGamma_major(false);
+        getGamma_minor(false);
     }
 
 }

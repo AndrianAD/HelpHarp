@@ -9,9 +9,9 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="56dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:popupTheme="@style/AlertDialog.AppCompat.Light"
         tools:layout_conversion_absoluteX="0dp"
         tools:layout_conversion_absoluteY="0dp"
         tools:layout_conversion_absoluteWidth="384dp"

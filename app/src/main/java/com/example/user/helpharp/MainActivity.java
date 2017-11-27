@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     public static Harp harp1 = new Harp();
     public static Harp harp2 = new Harp();
     CustomKeyboard mCustomKeyboard;
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.hexkbd);
         mCustomKeyboard.registerEditText(R.id.edit_text_enter_tabl);
@@ -63,22 +62,23 @@ public class MainActivity extends AppCompatActivity {
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
         actionCount = (Button) findViewById(R.id.button_action_count);
+        result.setMovementMethod(new ScrollingMovementMethod());
 
-        btncopy_enter = (Button) findViewById(R.id.button_copy);
-        btncopy_enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = enterTab.getText().toString();
-                ClipboardManager clipboardManager;
-                ClipData clipData;
-                clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                clipData = ClipData.newPlainText("text", text);
-                clipboardManager.setPrimaryClip(clipData);
-                Toast toast = Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });
+//        btncopy_enter = (Button) findViewById(R.id.button_copy);
+//        btncopy_enter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String text = enterTab.getText().toString();
+//                ClipboardManager clipboardManager;
+//                ClipData clipData;
+//                clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+//                clipData = ClipData.newPlainText("text", text);
+//                clipboardManager.setPrimaryClip(clipData);
+//                Toast toast = Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER, 0, 0);
+//                toast.show();
+//            }
+//        });
 
 
         btncopy_result = (Button) findViewById(R.id.button_copy2);

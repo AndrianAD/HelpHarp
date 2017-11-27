@@ -15,8 +15,7 @@
         android:id="@+id/gamma_major"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="TextView" />
+        android:padding="10dp" />
 
     <CheckBox
         android:padding="10dp"
@@ -29,8 +28,7 @@
         android:padding="10dp"
         android:id="@+id/gamma_minor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="wrap_content" />
 
     <CheckBox
         android:padding="10dp"
@@ -43,8 +41,7 @@
         android:padding="10dp"
         android:id="@+id/gamma_blues"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="wrap_content" />
 
     <CheckBox
         android:padding="10dp"
@@ -57,8 +54,7 @@
         android:padding="10dp"
         android:id="@+id/penta_minor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="wrap_content" />
 
     <CheckBox
         android:padding="10dp"
@@ -66,16 +62,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Мажорная пентатоника" />
-
     <TextView
         android:padding="10dp"
         android:id="@+id/penta_major"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-
-
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,30 +78,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="YOUR KEY" />
+            android:text="YOUR KEY"
+            android:textSize="10sp" />
 
         <Spinner
             android:id="@+id/spinner1"
             android:layout_width="wrap_content"
-            android:padding="5dp"
             android:layout_height="wrap_content"
-            android:entries="@array/harmonica_key" />
+            android:entries="@array/harmonica_key"
+            android:padding="5dp" />
 
         <TextView
             android:id="@+id/txt_spiner2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="CHANGE KEY"
+            android:text="NEEDED KEY"
             android:textSize="10sp" />
 
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:entries="@array/harmonica_key" />
+            android:entries="@array/harmonica_key"
+            android:padding="5dp" />
 
     </LinearLayout>
+
 
 </LinearLayout>

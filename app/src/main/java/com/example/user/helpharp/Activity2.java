@@ -2,7 +2,12 @@ package com.example.user.helpharp;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -200,6 +205,7 @@ public class Activity2 extends Activity {
     //----------------------------------------------------------
     public void getGamma_minor(boolean isChecked) {
         int j = 0, int_masiv;
+        String s1, s2 = "";
         StringBuilder stringBuilder = new StringBuilder();
         int temp = check_temp(harp.position, out_spiner2);
         final int[] masiv = {2, 1, 2, 2, 1, 2, 2};
@@ -213,22 +219,31 @@ public class Activity2 extends Activity {
             j--;
             stringBuilder.insert(0, isChecked ? nots.getNote() + " " : nots.getTabs() + " ");
         }
-        gammaview = String.valueOf(stringBuilder) + " T ";
-        minor.setText(gammaview);
+        s1 = String.valueOf(stringBuilder);
 
-
+        
         j = 0;
+        Hole nots = (Hole) harp.allnote.get(temp);
+        String s = isChecked ? nots.getNote() + " " : nots.getTabs();
+        int lenght = s.length();
+
         for (int i = 0; i < 37 - temp; i = i + int_masiv) {
             int_masiv = masiv[j];
-            Hole nots = (Hole) harp.allnote.get(i + temp);
+            nots = (Hole) harp.allnote.get(i + temp);
             j++;
             if (j == 7) {
                 j = 0;
             }
-            gammaview += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";
+            s2 += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";
         }
-        minor.setText(gammaview);
-        gammaview = "";
+
+        gammaview = s1 + s2;
+        int t = gammaview.indexOf(s);
+
+        SpannableStringBuilder sb = new SpannableStringBuilder(s1 + s2);
+        sb.setSpan(new ForegroundColorSpan(Color.RED), t, t + lenght, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        minor.setText(sb);
     }
 
     //----------------------------------------------------------

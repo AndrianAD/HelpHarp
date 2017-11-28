@@ -221,7 +221,7 @@ public class Activity2 extends Activity {
         }
         s1 = String.valueOf(stringBuilder);
 
-        
+
         j = 0;
         Hole nots = (Hole) harp.allnote.get(temp);
         String s = isChecked ? nots.getNote() + " " : nots.getTabs();
@@ -238,9 +238,9 @@ public class Activity2 extends Activity {
         }
 
         gammaview = s1 + s2;
-        int t = gammaview.indexOf(s);
+        int t = isChecked ? gammaview.indexOf(s) : gammaview.indexOf(s + " ");
 
-        SpannableStringBuilder sb = new SpannableStringBuilder(s1 + s2);
+        SpannableStringBuilder sb = new SpannableStringBuilder(gammaview);
         sb.setSpan(new ForegroundColorSpan(Color.RED), t, t + lenght, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
         minor.setText(sb);

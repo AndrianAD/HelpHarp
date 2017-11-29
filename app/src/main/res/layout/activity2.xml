@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="YOUR KEY"
+            android:text="ГАРМОШКА"
             android:textSize="10sp" />
 
         <Spinner
@@ -93,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="NEEDED KEY"
+            android:text="ТОНИКА ГАММЫ"
             android:textSize="10sp" />
 
         <Spinner

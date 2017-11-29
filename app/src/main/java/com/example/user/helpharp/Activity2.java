@@ -190,9 +190,9 @@ public class Activity2 extends Activity {
         Hole nots = (Hole) harp.allnote.get(temp);
         String firsTonica = isChecked ? nots.getNote() + " " : nots.getTabs();
         nots = (Hole) harp.allnote.get(temp + 12);
-        String secondTonica = isChecked ? nots.getNote() + " " : nots.getTabs();
+        String secondTonica = isChecked ? nots.getNote() + " " : new String(" " + nots.getTabs() + " ");
         nots = (Hole) harp.allnote.get(temp + 24);
-        String thirdTonica = isChecked ? nots.getNote() + " " : nots.getTabs();
+        String thirdTonica = isChecked ? nots.getNote() + " " : new String(" " + nots.getTabs() + " ");
         int lenght = firsTonica.length();
         int lenght2 = secondTonica.length();
         int lenght3 = thirdTonica.length();
@@ -209,15 +209,15 @@ public class Activity2 extends Activity {
         }
         String fullstring = firstString + secondString;
         int indexTonica = isChecked ? fullstring.indexOf(firsTonica) : fullstring.indexOf(firsTonica + " ");
-        int indexTonica2 = isChecked ? fullstring.indexOf(secondTonica) : fullstring.indexOf(secondTonica + " ");
-        int indexTonica3 = isChecked ? fullstring.indexOf(thirdTonica) : fullstring.indexOf(thirdTonica + " ");
+        int indexTonica2 = isChecked ? fullstring.indexOf(secondTonica, indexTonica + 1) : fullstring.indexOf(secondTonica);
+        int indexTonica3 = isChecked ? fullstring.indexOf(thirdTonica, indexTonica2 + 1) : fullstring.indexOf(thirdTonica);
 
         SpannableStringBuilder sb = new SpannableStringBuilder(fullstring);
         sb.setSpan(new ForegroundColorSpan(Color.RED), indexTonica, indexTonica + lenght, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         SpannableStringBuilder sb2 = new SpannableStringBuilder(sb);
         sb2.setSpan(new ForegroundColorSpan(Color.BLUE), indexTonica2, indexTonica2 + lenght2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         SpannableStringBuilder sb3 = new SpannableStringBuilder(sb2);
-        sb3.setSpan(new ForegroundColorSpan(Color.CYAN), indexTonica3, indexTonica3 + lenght3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        sb3.setSpan(new ForegroundColorSpan(Color.MAGENTA), indexTonica3, indexTonica3 + lenght3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         resultView.setText(sb3);
     }
 

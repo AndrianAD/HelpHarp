@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,9 +21,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.user.helpharp.data.TabsContract;
+import com.example.user.helpharp.data.TabsDBHelper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends Activity {
@@ -32,7 +42,7 @@ public class MainActivity extends Activity {
     static TextView result;
     public static Hole final_tabs;
     static int octava_set = 0;
-
+    private TabsDBHelper dbHelper;
 
 
     @Override
@@ -44,6 +54,7 @@ public class MainActivity extends Activity {
         mCustomKeyboard.registerEditText(R.id.edit_text_enter_tabl);
         result = (TextView) findViewById(R.id.text_view_result);
         enterTab = (EditText) findViewById(R.id.edit_text_enter_tabl);
+        dbHelper = new TabsDBHelper(this);
 
 
         start_activity();
@@ -93,8 +104,6 @@ public class MainActivity extends Activity {
         });
 
 
-
-
         newactivity = (Button) findViewById(R.id.button);
         newactivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,8 +114,6 @@ public class MainActivity extends Activity {
 
             }
         });
-
-
 
 
         Button octava_plus = (Button) findViewById(R.id.octava_plus);
@@ -181,11 +188,14 @@ public class MainActivity extends Activity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                finish();
-                overridePendingTransition(0, 0);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+//                Intent intent = getIntent();
+//                finish();
+//                overridePendingTransition(0, 0);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(intent);
+                insertTabs();
+//                displayDatabaseInfo();
+
             }
         });
 //-----------------------------------------------
@@ -200,7 +210,6 @@ public class MainActivity extends Activity {
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {
-
                 String[] choose = getResources().getStringArray(R.array.harmonica_stroi);
 
                 if (choose[selectedItemPosition].equals("Рихтеровская")) {
@@ -256,11 +265,9 @@ public class MainActivity extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
 //-----------------------------------------------
 
-
-
-    } /*end of start activity*/
 
     public static void calculate(Harp harp1, Harp harp2) {
         try {
@@ -323,7 +330,6 @@ public class MainActivity extends Activity {
         return temps;
     }
 
-
     @Override
     public void onBackPressed() {
         // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
@@ -335,6 +341,7 @@ public class MainActivity extends Activity {
     public void dialog_chose_key(final Harp harp, final View view) {
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.button_key);
+        dialog.setTitle("Выберите тональность:");
         dialog.show();
         final Button button0 = (Button) dialog.findViewById(R.id.button0);
         final Button button1 = (Button) dialog.findViewById(R.id.button1);
@@ -348,88 +355,32 @@ public class MainActivity extends Activity {
         final Button button9 = (Button) dialog.findViewById(R.id.button9);
         final Button button10 = (Button) dialog.findViewById(R.id.button10);
         final Button button11 = (Button) dialog.findViewById(R.id.button11);
+        final Map<Integer, Integer> mapNotes = new HashMap<Integer, Integer>() {
+            {
+                put(R.id.button0, 0);
+                put(R.id.button1, 1);
+                put(R.id.button2, 2);
+                put(R.id.button3, 3);
+                put(R.id.button4, 4);
+                put(R.id.button5, 5);
+                put(R.id.button6, 6);
+                put(R.id.button7, 7);
+                put(R.id.button8, 8);
+                put(R.id.button9, 9);
+                put(R.id.button10, 10);
+                put(R.id.button11, 11);
+            }
+        };
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.button0:
-                        harp.position = 0;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-
-                    case R.id.button1:
-                        harp.position = 1;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-
-                    case R.id.button2:
-                        harp.position = 2;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-
-                    case R.id.button3:
-                        harp.position = 3;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-
-                    case R.id.button4:
-                        harp.position = 4;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-                    case R.id.button5:
-                        harp.position = 5;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-                    case R.id.button6:
-                        harp.position = 6;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-                    case R.id.button7:
-                        harp.position = 7;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-                    case R.id.button8:
-                        harp.position = 8;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-
-                    case R.id.button9:
-                        harp.position = 9;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-                    case R.id.button10:
-                        harp.position = 10;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-                    case R.id.button11:
-                        harp.position = 11;
-                        harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                        calculate(harp1, harp2);
-                        dialog.dismiss();
-                        break;
-                }
+                int temp = v.getId();
+                if (mapNotes.containsKey(temp)) ;
+                int note = mapNotes.get(temp);
+                harp.position = note;
+                harp.makeharp(harp.stroi, harp.position, (TextView) view);
+                calculate(harp1, harp2);
+                dialog.dismiss();
             }
         };
         button0.setOnClickListener(onClickListener);
@@ -469,4 +420,32 @@ public class MainActivity extends Activity {
     }
 
 
+    private void insertTabs() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TabsContract.COLUMN_TAB_NAME, "Первые табы");
+        values.put(TabsContract.COLUMN_TABS, "1 2 3 4 5 6 7 8");
+        long newRowid = db.insert(TabsContract.TABLE_NAME, null, values);
+        Log.v("Catalog activity", "new rowid" + newRowid);
+        displayDatabaseInfo();
+
+    }
+
+    private void displayDatabaseInfo() {
+        // Create and/or open a database to read from it
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TabsContract.TABLE_NAME, null);
+        try {
+            TextView displayView = (TextView) findViewById(R.id.text_view_result);
+            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+        } finally {
+            // Always close the cursor when you're done reading from it. This releases all its
+            // resources and makes it invalid.
+            cursor.close();
+        }
+    }
+
 }
+
+
+

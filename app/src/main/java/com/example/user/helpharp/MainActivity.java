@@ -14,6 +14,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,6 +55,7 @@ public class MainActivity extends Activity {
         mCustomKeyboard.registerEditText(R.id.edit_text_enter_tabl);
         result = (TextView) findViewById(R.id.text_view_result);
         enterTab = (EditText) findViewById(R.id.edit_text_enter_tabl);
+        enterTab.setShowSoftInputOnFocus(false); // hide the standart keyboard
         dbHelper = new TabsDBHelper(this);
 
 
@@ -67,7 +69,8 @@ public class MainActivity extends Activity {
         final TextView need_harm_key_view = (TextView) findViewById(R.id.view_z);
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
-        actionCount = (Button) findViewById(R.id.button_action_count);
+        actionCount
+                = (Button) findViewById(R.id.button_action_count);
         result.setMovementMethod(new ScrollingMovementMethod());
 
 //        btncopy_enter = (Button) findViewById(R.id.button_copy);
@@ -188,13 +191,39 @@ public class MainActivity extends Activity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.save_form);
+                dialog.setTitle("Выберите тональность:");
+                dialog.show();
+                final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
+                final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);
+                buttonOK.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String bdname = String.valueOf(name.getText());
+                        String bdtab = String.valueOf(result.getText());
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+                        ContentValues values = new ContentValues();
+                        values.put(TabsContract.COLUMN_TAB_NAME, bdname);
+                        values.put(TabsContract.COLUMN_TABS, bdtab);
+                        long newRowid = db.insert(TabsContract.TABLE_NAME, null, values);
+                        Log.v("Catalog activity", "new rowid" + newRowid);
+                        dialog.dismiss();
+                        displayDatabaseInfo();
+
+
+                    }
+                });
+
+
+
+
 //                Intent intent = getIntent();
 //                finish();
 //                overridePendingTransition(0, 0);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 //                startActivity(intent);
-                insertTabs();
-//                displayDatabaseInfo();
+
 
             }
         });
@@ -294,8 +323,7 @@ public class MainActivity extends Activity {
                 if (list_i.contains("\n"))
                     rezultat += "\n";
                 for (int j = 0; j < 38; j++) {
-                    Hole hole = (Hole) harp1.allnote.get(j);
-                    String list_J = hole.getTabs();
+                    String list_J = ((Hole) harp1.allnote.get(j)).getTabs();
                     // Ищет совпадения в первом List
                     if (list_J.equals(list_i)) {
                         int peremennaia = j + temp;
@@ -333,7 +361,8 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
-        if (mCustomKeyboard.isCustomKeyboardVisible()) mCustomKeyboard.hideCustomKeyboard();
+        if (mCustomKeyboard.isCustomKeyboardVisible())
+            mCustomKeyboard.hideCustomKeyboard();
         else this.finish();
     }
 
@@ -412,11 +441,6 @@ public class MainActivity extends Activity {
         while (i != str.length);
 
         list = new ArrayList<>(Arrays.asList(str));
-        String temp = "";
-        for (String s : list) {
-            temp = temp + s;
-        }
-        result.setText(temp);
     }
 
 

@@ -25,7 +25,6 @@ public class CustomKeyboard {
      * A link to the activity that hosts the {@link #mKeyboardView}.
      */
     private Activity mHostActivity;
-
     /**
      * The key (code) handler.
      */
@@ -55,10 +54,6 @@ public class CustomKeyboard {
                 editable.insert(start, "10");
                 calculate(harp1, harp2);
 
-//            } else if (primaryCode == 10) {
-//                editable.insert(start, " ");
-//                editable.insert(start + 1, "\n");
-//                editable.insert(start + 2, " ");
             } else { // insert character
                 editable.insert(start, Character.toString((char) primaryCode));
                 calculate(harp1, harp2);
@@ -95,17 +90,7 @@ public class CustomKeyboard {
         }
     };
 
-    /**
-     * Create a custom keyboard, that uses the KeyboardView (with resource id <var>viewid</var>) of the <var>host</var> activity,
-     * and load the keyboard layout from xml file <var>layoutid</var> (see {@link Keyboard} for description).
-     * Note that the <var>host</var> activity must have a <var>KeyboardView</var> in its layout (typically aligned with the bottom of the activity).
-     * Note that the keyboard layout xml file may include key codes for navigation; see the constants in this class for their values.
-     * Note that to enable EditText's to use this custom keyboard, call the {@link #registerEditText(int)}.
-     *
-     * @param host     The hosting activity.
-     * @param viewid   The id of the KeyboardView.
-     * @param layoutid The id of the xml file containing the keyboard layout.
-     */
+
     public CustomKeyboard(Activity host, int viewid, int layoutid) {
         mHostActivity = host;
         mKeyboardView = (KeyboardView) mHostActivity.findViewById(viewid);
@@ -127,10 +112,10 @@ public class CustomKeyboard {
      * Make the CustomKeyboard visible, and hide the system keyboard for view v.
      */
     public void showCustomKeyboard(View v) {
-        mKeyboardView.setVisibility(View.VISIBLE);
-        mKeyboardView.setEnabled(true);
         if (v != null)
             ((InputMethodManager) mHostActivity.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), 0);
+        mKeyboardView.setVisibility(View.VISIBLE);
+        mKeyboardView.setEnabled(true);
     }
 
     /**
@@ -150,16 +135,6 @@ public class CustomKeyboard {
         // Find the EditText 'resid'
         EditText edittext = (EditText) mHostActivity.findViewById(resid);
         edittext.setCursorVisible(true);
-        // Make the custom keyboard appear
-        edittext.setOnFocusChangeListener(new OnFocusChangeListener() {
-            // NOTE By setting the on focus listener, we can show the custom keyboard when the edit box gets focus, but also hide it when the edit box loses focus
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                    showCustomKeyboard(v);
-                else hideCustomKeyboard();
-            }
-        });
         edittext.setOnClickListener(new OnClickListener() {
             // NOTE By setting the on click listener, we can show the custom keyboard again, by tapping on an edit box that already had focus (but that had the keyboard hidden).
             @Override

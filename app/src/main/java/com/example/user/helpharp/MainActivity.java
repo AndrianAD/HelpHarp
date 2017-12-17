@@ -201,7 +201,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         String bdname = String.valueOf(name.getText());
-                        String bdtab = String.valueOf(result.getText());
+                        String bdtab = String.valueOf(enterTab.getText());
                         SQLiteDatabase db = dbHelper.getWritableDatabase();
                         ContentValues values = new ContentValues();
                         values.put(TabsContract.COLUMN_TAB_NAME, bdname);
@@ -210,12 +210,8 @@ public class MainActivity extends Activity {
                         Log.v("Catalog activity", "new rowid" + newRowid);
                         dialog.dismiss();
                         displayDatabaseInfo();
-
-
                     }
                 });
-
-
 
 
 //                Intent intent = getIntent();
@@ -444,24 +440,57 @@ public class MainActivity extends Activity {
     }
 
 
-    private void insertTabs() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(TabsContract.COLUMN_TAB_NAME, "Первые табы");
-        values.put(TabsContract.COLUMN_TABS, "1 2 3 4 5 6 7 8");
-        long newRowid = db.insert(TabsContract.TABLE_NAME, null, values);
-        Log.v("Catalog activity", "new rowid" + newRowid);
-        displayDatabaseInfo();
 
-    }
 
     private void displayDatabaseInfo() {
         // Create and/or open a database to read from it
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TabsContract.TABLE_NAME, null);
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                TabsContract.COLUMN_TAB_NAME,
+                TabsContract.COLUMN_TABS};
+
+        // Perform a query on the pets table
+        Cursor cursor = db.query(
+                TabsContract.TABLE_NAME,   // The table to query
+                projection,            // The columns to return
+                null,                  // The columns for the WHERE clause
+                null,                  // The values for the WHERE clause
+                null,                  // Don't group the rows
+                null,                  // Don't filter by row groups
+                null);                   // The sort order
+
+//        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
+
         try {
-            TextView displayView = (TextView) findViewById(R.id.text_view_result);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+            // Create a header in the Text View that looks like this:
+            //
+            // The pets table contains <number of rows in Cursor> pets.
+            // _id - name - breed - gender - weight
+            //
+            // In the while loop below, iterate through the rows of the cursor and display
+            // the information from each column in this order.
+            result.append(TabsContract.COLUMN_TAB_NAME + " -------- " +
+                    TabsContract.COLUMN_TABS + "\n");
+
+            // Figure out the index of each column
+            int tabsColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TABS);
+            int nameColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TAB_NAME);
+
+
+            // Iterate through all the returned rows in the cursor
+            while (cursor.moveToNext()) {
+                // Use that index to extract the String or Int value of the word
+                // at the current row the cursor is on.
+                String currentTabs = cursor.getString(tabsColumnIndex);
+                String currentName = cursor.getString(nameColumnIndex);
+
+                // Display the values from each column of the current row in the cursor in the TextView
+                result.append(("\n" + currentName + " - " +
+                        currentTabs));
+            }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.

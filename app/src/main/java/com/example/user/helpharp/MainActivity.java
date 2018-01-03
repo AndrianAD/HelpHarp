@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
         newactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, Activity2.class);
+                Intent myIntent = new Intent(MainActivity.this, CatalogActivity.class);
                 startActivity(myIntent);
 
 
@@ -193,7 +193,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.save_form);
-                dialog.setTitle("Выберите тональность:");
+                dialog.setTitle("Введите название:");
                 dialog.show();
                 final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
                 final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);

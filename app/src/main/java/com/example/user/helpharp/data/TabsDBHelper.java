@@ -18,6 +18,7 @@ public class TabsDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_TABS_TABLE = "CREATE TABLE " + TabsContract.TABLE_NAME + " ("
+                + TabsContract._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TabsContract.COLUMN_TAB_NAME + " TEXT NOT NULL, "
                 + TabsContract.COLUMN_TABS + " TEXT);";
         db.execSQL(SQL_CREATE_TABS_TABLE);

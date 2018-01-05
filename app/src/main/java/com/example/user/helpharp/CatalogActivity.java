@@ -3,8 +3,10 @@ package com.example.user.helpharp;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -36,16 +38,39 @@ public class CatalogActivity extends Activity implements
 
 
         // Find the ListView which will be populated with the pet data
-        ListView petListView = (ListView) findViewById(R.id.list);
+        ListView tabListView = (ListView) findViewById(R.id.list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
-        petListView.setEmptyView(emptyView);
+        tabListView.setEmptyView(emptyView);
 
         // Setup an Adapter to create a list item for each row of pet data in the Cursor.
         // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new TabsCursorAdapter(this, null);
-        petListView.setAdapter(mCursorAdapter);
+        tabListView.setAdapter(mCursorAdapter);
+
+
+        tabListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Create new intent to go to {@link EditorActivity}
+                Intent intent = new Intent(CatalogActivity.this, Detail_Activity.class);
+
+                // Form the content URI that represents the specific pet that was clicked on,
+                // by appending the "id" (passed as input to this method) onto the
+                // {@link PetEntry#CONTENT_URI}.
+                // For example, the URI would be "content://com.example.android.pets/pets/2"
+                // if the pet with ID 2 was clicked on.
+                Uri currentPetUri = ContentUris.withAppendedId(TabsContract.CONTENT_URI, id);
+
+                // Set the URI on the data field of the intent
+                intent.setData(currentPetUri);
+
+                // Launch the {@link EditorActivity} to display the data for the current pet.
+                startActivity(intent);
+            }
+        });
+
 
         getLoaderManager().initLoader(TABS_LOADER, null, this);
 
@@ -55,7 +80,7 @@ public class CatalogActivity extends Activity implements
     /**
      * Helper method to insert hardcoded pet data into the database. For debugging purposes only.
      */
-    public void insertPet(View view) {
+    public void insertTAB(View view) {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.save_form);
         dialog.setTitle("Введите название:");
@@ -79,7 +104,7 @@ public class CatalogActivity extends Activity implements
     /**
      * Helper method to delete all pets in the database.
      */
-    private void deleteAllPets() {
+    private void deleteAllTabs() {
         int rowsDeleted = getContentResolver().delete(TabsContract.CONTENT_URI, null, null);
         Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
     }
@@ -87,7 +112,6 @@ public class CatalogActivity extends Activity implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // Define a projection that specifies the columns from the table we care about.
         String[] projection = {
                 TabsContract._ID,
                 TabsContract.COLUMN_TAB_NAME,
@@ -99,7 +123,7 @@ public class CatalogActivity extends Activity implements
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
-                null);                  // Default sort order
+                TabsContract._ID + " DESC");                  // Default sort order
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -19,13 +20,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.user.helpharp.data.TabsContract;
 import com.example.user.helpharp.data.TabsDBHelper;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
     public static Harp harp1 = new Harp();
     public static Harp harp2 = new Harp();
     CustomKeyboard mCustomKeyboard;
@@ -44,6 +44,9 @@ public class MainActivity extends Activity {
     public static Hole final_tabs;
     static int octava_set = 0;
     private TabsDBHelper dbHelper;
+    private SeekBar seekBar;
+    private TextView need_harm_key_view;
+
 
 
     @Override
@@ -55,7 +58,13 @@ public class MainActivity extends Activity {
         mCustomKeyboard.registerEditText(R.id.edit_text_enter_tabl);
         result = (TextView) findViewById(R.id.text_view_result);
         enterTab = (EditText) findViewById(R.id.edit_text_enter_tabl);
-        enterTab.setShowSoftInputOnFocus(false); // hide the standart keyboard
+        seekBar = (SeekBar) findViewById(R.id.seekbar);
+        need_harm_key_view = (TextView) findViewById(R.id.view_z);
+        seekBar.setOnSeekBarChangeListener(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            enterTab.setShowSoftInputOnFocus(false); // hide the standart keyboard
+        }
         dbHelper = new TabsDBHelper(this);
 
 
@@ -66,11 +75,10 @@ public class MainActivity extends Activity {
     public void start_activity() {
         final Button my_harm_key, need_harm_key, actionCount, btncopy_enter, btncopy_result, newactivity;
         final TextView my_harm_key_view = (TextView) findViewById(R.id.view_n);
-        final TextView need_harm_key_view = (TextView) findViewById(R.id.view_z);
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
-        actionCount
-                = (Button) findViewById(R.id.button_action_count);
+//        actionCount
+//                = (Button) findViewById(R.id.button_action_count);
         result.setMovementMethod(new ScrollingMovementMethod());
 
 //        btncopy_enter = (Button) findViewById(R.id.button_copy);
@@ -90,21 +98,21 @@ public class MainActivity extends Activity {
 //        });
 
 
-        btncopy_result = (Button) findViewById(R.id.button_copy2);
-        btncopy_result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = result.getText().toString();
-                ClipboardManager clipboardManager;
-                ClipData clipData;
-                clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                clipData = ClipData.newPlainText("text", text);
-                clipboardManager.setPrimaryClip(clipData);
-                Toast toast = Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });
+//        btncopy_result = (Button) findViewById(R.id.button_copy2);
+//        btncopy_result.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String text = result.getText().toString();
+//                ClipboardManager clipboardManager;
+//                ClipData clipData;
+//                clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+//                clipData = ClipData.newPlainText("text", text);
+//                clipboardManager.setPrimaryClip(clipData);
+//                Toast toast = Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER, 0, 0);
+//                toast.show();
+//            }
+//        });
 
 
         newactivity = (Button) findViewById(R.id.button);
@@ -158,12 +166,12 @@ public class MainActivity extends Activity {
         });
 
 
-        actionCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculate(harp1, harp2);
-            }
-        });
+//        actionCount.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                calculate(harp1, harp2);
+//            }
+//        });
 
 
 //-----------------------------------------------
@@ -173,8 +181,6 @@ public class MainActivity extends Activity {
                 dialog_chose_key(harp1, my_harm_key_view);
 
             }
-
-
         });
 
 //-----------------------------------------------
@@ -191,36 +197,11 @@ public class MainActivity extends Activity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(MainActivity.this);
-                dialog.setContentView(R.layout.save_form);
-                dialog.setTitle("Введите название:");
-                dialog.show();
-                final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
-                final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);
-                buttonOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String bdname = String.valueOf(name.getText());
-                        String bdtab = String.valueOf(enterTab.getText());
-                        SQLiteDatabase db = dbHelper.getWritableDatabase();
-                        ContentValues values = new ContentValues();
-                        values.put(TabsContract.COLUMN_TAB_NAME, bdname);
-                        values.put(TabsContract.COLUMN_TABS, bdtab);
-                        long newRowid = db.insert(TabsContract.TABLE_NAME, null, values);
-                        Log.v("Catalog activity", "new rowid" + newRowid);
-                        dialog.dismiss();
-                        displayDatabaseInfo();
-                    }
-                });
-
-
-//                Intent intent = getIntent();
-//                finish();
-//                overridePendingTransition(0, 0);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                startActivity(intent);
-
-
+                Intent intent = getIntent();
+                finish();
+                overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
             }
         });
 //-----------------------------------------------
@@ -439,66 +420,89 @@ public class MainActivity extends Activity {
         list = new ArrayList<>(Arrays.asList(str));
     }
 
-
-
-
-    private void displayDatabaseInfo() {
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                TabsContract.COLUMN_TAB_NAME,
-                TabsContract.COLUMN_TABS};
-
-        // Perform a query on the pets table
-        Cursor cursor = db.query(
-                TabsContract.TABLE_NAME,   // The table to query
-                projection,            // The columns to return
-                null,                  // The columns for the WHERE clause
-                null,                  // The values for the WHERE clause
-                null,                  // Don't group the rows
-                null,                  // Don't filter by row groups
-                null);                   // The sort order
-
-//        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
-
-        try {
-            // Create a header in the Text View that looks like this:
-            //
-            // The pets table contains <number of rows in Cursor> pets.
-            // _id - name - breed - gender - weight
-            //
-            // In the while loop below, iterate through the rows of the cursor and display
-            // the information from each column in this order.
-            result.append(TabsContract.COLUMN_TAB_NAME + " -------- " +
-                    TabsContract.COLUMN_TABS + "\n");
-
-            // Figure out the index of each column
-            int tabsColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TABS);
-            int nameColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TAB_NAME);
-
-
-            // Iterate through all the returned rows in the cursor
-            while (cursor.moveToNext()) {
-                // Use that index to extract the String or Int value of the word
-                // at the current row the cursor is on.
-                String currentTabs = cursor.getString(tabsColumnIndex);
-                String currentName = cursor.getString(nameColumnIndex);
-
-                // Display the values from each column of the current row in the cursor in the TextView
-                result.append(("\n" + currentName + " - " +
-                        currentTabs));
-            }
-        } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
-            // resources and makes it invalid.
-            cursor.close();
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        progress = seekBar.getProgress();
+        Harp harp = new Harp();
+        int position = harp1.position + progress;
+        if (harp1.position + progress >= 12) {
+            position = Math.abs(12 - position);
         }
+        harp.makeharp(harp2.stroi, position);
+        calculate(harp1, harp);
+
+
     }
 
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+
+    }
 }
+
+
+//    private void displayDatabaseInfo() {
+//        // Create and/or open a database to read from it
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//
+//        // Define a projection that specifies which columns from the database
+//        // you will actually use after this query.
+//        String[] projection = {
+//                TabsContract.COLUMN_TAB_NAME,
+//                TabsContract.COLUMN_TABS};
+//
+//        // Perform a query on the pets table
+//        Cursor cursor = db.query(
+//                TabsContract.TABLE_NAME,   // The table to query
+//                projection,            // The columns to return
+//                null,                  // The columns for the WHERE clause
+//                null,                  // The values for the WHERE clause
+//                null,                  // Don't group the rows
+//                null,                  // Don't filter by row groups
+//                null);                   // The sort order
+//
+////        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
+//
+//        try {
+//            // Create a header in the Text View that looks like this:
+//            //
+//            // The pets table contains <number of rows in Cursor> pets.
+//            // _id - name - breed - gender - weight
+//            //
+//            // In the while loop below, iterate through the rows of the cursor and display
+//            // the information from each column in this order.
+//            result.append(TabsContract.COLUMN_TAB_NAME + " -------- " +
+//                    TabsContract.COLUMN_TABS + "\n");
+//
+//            // Figure out the index of each column
+//            int tabsColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TABS);
+//            int nameColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TAB_NAME);
+//
+//
+//            // Iterate through all the returned rows in the cursor
+//            while (cursor.moveToNext()) {
+//                // Use that index to extract the String or Int value of the word
+//                // at the current row the cursor is on.
+//                String currentTabs = cursor.getString(tabsColumnIndex);
+//                String currentName = cursor.getString(nameColumnIndex);
+//
+//                // Display the values from each column of the current row in the cursor in the TextView
+//                result.append(("\n" + currentName + " - " +
+//                        currentTabs));
+//            }
+//        } finally {
+//            // Always close the cursor when you're done reading from it. This releases all its
+//            // resources and makes it invalid.
+//            cursor.close();
+//        }
+
 
 
 

@@ -335,13 +335,13 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         return temps;
     }
 
-    @Override
-    public void onBackPressed() {
-        // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
-        if (mCustomKeyboard.isCustomKeyboardVisible())
-            mCustomKeyboard.hideCustomKeyboard();
-        else this.finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
+//        if (mCustomKeyboard.isCustomKeyboardVisible())
+//            mCustomKeyboard.hideCustomKeyboard();
+//        else this.finish();
+//    }
 
 
     public void dialog_chose_key(final Harp harp, final View view) {
@@ -423,13 +423,12 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         progress = seekBar.getProgress();
-        Harp harp = new Harp();
         int position = harp1.position + progress;
         if (harp1.position + progress >= 12) {
             position = Math.abs(12 - position);
         }
-        harp.makeharp(harp2.stroi, position);
-        calculate(harp1, harp);
+        harp2.makeharp(harp2.stroi, position);
+        calculate(harp1, harp2);
 
 
     }

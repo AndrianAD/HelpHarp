@@ -1,10 +1,12 @@
 package com.example.user.helpharp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -20,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -73,7 +76,8 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 
 
     public void start_activity() {
-        final Button my_harm_key, need_harm_key, actionCount, btncopy_enter, btncopy_result, newactivity;
+        final Button my_harm_key, need_harm_key, actionCount, btncopy_enter, btncopy_result;
+        ImageButton newactivity;
         final TextView my_harm_key_view = (TextView) findViewById(R.id.view_n);
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
@@ -115,7 +119,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 //        });
 
 
-        newactivity = (Button) findViewById(R.id.button);
+        newactivity = (ImageButton) findViewById(R.id.button);
         newactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,15 +197,11 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 
 //-----------------------------------------------
 //        RESET!
-        Button reset = (Button) findViewById(R.id.reset_id);
+        ImageButton reset = (ImageButton) findViewById(R.id.reset_id);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                finish();
-                overridePendingTransition(0, 0);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+                showDeleteConfirmationDialog();
             }
         });
 //-----------------------------------------------
@@ -443,6 +443,36 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     public void onStopTrackingTouch(SeekBar seekBar) {
 
 
+    }
+
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = getIntent();
+                finish();
+                overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
 

@@ -105,7 +105,6 @@ public class Detail_Activity extends Activity implements LoaderManager.LoaderCal
                 }
             }
         });
-
         // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();

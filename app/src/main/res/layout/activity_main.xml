@@ -118,6 +118,7 @@
         android:layout_height="31dp"
         android:layout_marginEnd="6dp"
         android:layout_marginStart="6dp"
+        android:layout_marginTop="16dp"
         android:max="11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,8 +126,8 @@
 
     <EditText
         android:id="@+id/edit_text_enter_tabl"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="285dp"
+        android:layout_height="75dp"
         android:layout_marginBottom="21dp"
         android:layout_marginEnd="11dp"
         android:layout_marginStart="16dp"
@@ -136,6 +137,7 @@
         android:textCursorDrawable="@null"
         app:layout_constraintBottom_toTopOf="@+id/seekbar"
         app:layout_constraintEnd_toStartOf="@+id/reset_id"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
@@ -170,12 +172,12 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/reset_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
-        android:text="res"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/ic_autorenew_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/seekbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edit_text_enter_tabl"
@@ -200,8 +202,7 @@
         android:id="@+id/keyboardview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -210,15 +211,15 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="31dp"
-        android:text="Scales"
-        android:textSize="8sp"
+        android:background="@drawable/ic_save_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/reset_id"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.314"
         app:layout_constraintStart_toEndOf="@+id/edit_text_enter_tabl"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         tools:layout_constraintBaseline_creator="1"

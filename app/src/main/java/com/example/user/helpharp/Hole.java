@@ -35,7 +35,6 @@ public class Hole {
 
     }
 
-
     private static void chek_stroi(String stroi) {
         if (stroi == "Рихтеровская") {
             masiv_note = new Note[]{
@@ -56,7 +55,6 @@ public class Hole {
             masiv_note[8] = new Note("Eb", "3*");
             masiv_note[9] = new Note("E", "3");
         }
-
         if (stroi == "Кантри") {
             masiv_note[17] = new Note("C", "-5'");
             masiv_note[18] = new Note("C#", "-5");
@@ -67,7 +65,6 @@ public class Hole {
     public String getNote() {
         return note;
     }
-
     public String getTabs() {
         return tabs;
     }

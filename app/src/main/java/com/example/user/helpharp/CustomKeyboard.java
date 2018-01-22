@@ -1,6 +1,7 @@
 package com.example.user.helpharp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
@@ -11,6 +12,7 @@ import android.view.View.OnFocusChangeListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import static com.example.user.helpharp.MainActivity.calculate;
 import static com.example.user.helpharp.MainActivity.harp1;
@@ -36,7 +38,7 @@ public class CustomKeyboard {
 
         @Override
         public void onKey(int primaryCode, int[] keyCodes) {
-            // NOTE We can say '<Key android:codes="49,50" ... >' in the xml file; all codes come in keyCodes, the first in this list in primaryCode
+            // NOTE We can say '<Key android:codes="49,50" ... >' in the xml file; all codes come in keyCodes, the first in this input_list in primaryCode
             // Get the EditText and its Editable
             View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
             if (focusCurrent == null) return;
@@ -64,27 +66,21 @@ public class CustomKeyboard {
         @Override
         public void onPress(int arg0) {
         }
-
         @Override
         public void onRelease(int primaryCode) {
         }
-
         @Override
         public void onText(CharSequence text) {
         }
-
         @Override
         public void swipeDown() {
         }
-
         @Override
         public void swipeLeft() {
         }
-
         @Override
         public void swipeRight() {
         }
-
         @Override
         public void swipeUp() {
         }
@@ -100,14 +96,12 @@ public class CustomKeyboard {
         // Hide the standard keyboard initially
         mHostActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
-
     /**
      * Returns whether the CustomKeyboard is visible.
      */
     public boolean isCustomKeyboardVisible() {
         return mKeyboardView.getVisibility() == View.VISIBLE;
     }
-
     /**
      * Make the CustomKeyboard visible, and hide the system keyboard for view v.
      */
@@ -125,7 +119,6 @@ public class CustomKeyboard {
         mKeyboardView.setVisibility(View.GONE);
         mKeyboardView.setEnabled(false);
     }
-
     /**
      * Register <var>EditText<var> with resource id <var>resid</var> (on the hosting activity) for using this custom keyboard.
      *
@@ -134,7 +127,7 @@ public class CustomKeyboard {
     public void registerEditText(int resid) {
         // Find the EditText 'resid'
         EditText edittext = (EditText) mHostActivity.findViewById(resid);
-        edittext.setCursorVisible(true);
+//        edittext.setCursorVisible(true);
         edittext.setOnClickListener(new OnClickListener() {
             // NOTE By setting the on click listener, we can show the custom keyboard again, by tapping on an edit box that already had focus (but that had the keyboard hidden).
             @Override
@@ -142,7 +135,5 @@ public class CustomKeyboard {
                 showCustomKeyboard(v);
             }
         });
-
-
     }
 }

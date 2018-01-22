@@ -28,8 +28,11 @@
     <string name="editor_delete_pet_successful">Tab deleted</string>
     <string name="editor_delete_pet_failed">Error with deleting tab</string>
     <string name="delete_dialog_msg">Delete this tab?</string>
+    <string name="restart_message">You sure to restart?</string>
+
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="Ok">Ок</string>
 
 
 </resources>

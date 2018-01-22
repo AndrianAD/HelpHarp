@@ -17,9 +17,9 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.user.helpharp.MainActivity.check_temp;
+import static com.example.user.helpharp.MainActivity.check_difference_position;
 
-public class Activity2 extends Activity {
+public class ScaleActivity extends Activity {
     TextView major, minor, blues, penta_minor, penta_major;
     Harp harp = new Harp();
     int out_spiner2 = 5;
@@ -175,7 +175,7 @@ public class Activity2 extends Activity {
         int j = 0, int_masiv;
         String firstString, secondString = "";
         StringBuilder stringBuilder = new StringBuilder();
-        int temp = check_temp(harp.position, out_spiner2);
+        int temp = check_difference_position(harp.position, out_spiner2);
         for (int i = temp; i > 0; i = i - int_masiv) {
             int_masiv = masiv[j + masiv.length - 1];
             if (i - int_masiv < 0) {

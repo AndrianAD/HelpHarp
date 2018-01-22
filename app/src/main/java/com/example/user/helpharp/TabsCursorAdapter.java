@@ -26,18 +26,18 @@ public class TabsCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
-        TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
+        TextView summaryTextView = (TextView) view.findViewById(R.id.tab);
 
-        // Find the columns of pet attributes that we're interested in
+        // Find the columns of tab attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TAB_NAME);
         int tabsColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TABS);
 
-        // Read the pet attributes from the Cursor for the current pet
-        String petName = cursor.getString(nameColumnIndex);
-        String petBreed = cursor.getString(tabsColumnIndex);
+        // Read the pet attributes from the Cursor for the current tab
+        String name = cursor.getString(nameColumnIndex);
+        String tab = cursor.getString(tabsColumnIndex);
 
-        // Update the TextViews with the attributes for the current pet
-        nameTextView.setText(petName);
-        summaryTextView.setText(petBreed);
+        // Update the TextViews with the attributes for the current tab
+        nameTextView.setText(name);
+        summaryTextView.setText(tab);
     }
 }

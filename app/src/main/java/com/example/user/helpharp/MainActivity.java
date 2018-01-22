@@ -1,23 +1,16 @@
 package com.example.user.helpharp;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.example.user.helpharp.data.TabsContract;
 import com.example.user.helpharp.data.TabsDBHelper;
 import java.util.ArrayList;
@@ -40,7 +32,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     public static Harp harp1 = new Harp();
     public static Harp harp2 = new Harp();
     CustomKeyboard mCustomKeyboard;
-    public static ArrayList<String> list = new ArrayList<String>();
+    public static ArrayList<String> input_list = new ArrayList<String>();
     public static ArrayList<Integer> tempArray = new ArrayList<>();
     static EditText enterTab;
     static TextView result;
@@ -51,13 +43,12 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     private TextView need_harm_key_view;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.hexkbd);
+        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.keyboard);
         mCustomKeyboard.registerEditText(R.id.edit_text_enter_tabl);
         result = (TextView) findViewById(R.id.text_view_result);
         enterTab = (EditText) findViewById(R.id.edit_text_enter_tabl);
@@ -69,7 +60,6 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
             enterTab.setShowSoftInputOnFocus(false); // hide the standart keyboard
         }
         dbHelper = new TabsDBHelper(this);
-
 
         start_activity();
     }
@@ -123,16 +113,36 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         newactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, CatalogActivity.class);
-                startActivity(myIntent);
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.save_form);
+                dialog.setTitle("Введите название:");
+                dialog.show();
+                final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
+                final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);
+                buttonOK.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String bdname = String.valueOf(name.getText());
+                        String bdtab = String.valueOf(MainActivity.enterTab.getText());
+                        ContentValues values = new ContentValues();
+                        values.put(TabsContract.COLUMN_TAB_NAME, bdname);
+                        values.put(TabsContract.COLUMN_TABS, bdtab);
+                        Uri newUri = getContentResolver().insert(TabsContract.CONTENT_URI, values);
+                        dialog.dismiss();
+                        Intent myIntent = new Intent(MainActivity.this, CatalogActivity.class);
+                        startActivity(myIntent);
+                    }
+                });
+
+
 
 
             }
         });
 
 
-        Button octava_plus = (Button) findViewById(R.id.octava_plus);
-        final Button octava_minus = (Button) findViewById(R.id.octava_minus);
+        final ImageButton octava_plus = (ImageButton) findViewById(R.id.octava_plus);
+        final ImageButton octava_minus = (ImageButton) findViewById(R.id.octava_minus);
 
         octava_minus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +192,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         my_harm_key.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog_chose_key(harp1, my_harm_key_view);
+                dialog_chose_key(harp1, my_harm_key_view, true);
 
             }
         });
@@ -191,7 +201,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         need_harm_key.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog_chose_key(harp2, need_harm_key_view);
+                dialog_chose_key(harp2, need_harm_key_view, false);
             }
         });
 
@@ -201,7 +211,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDeleteConfirmationDialog();
+                showDeleteConfirmationDialog(R.string.restart_message, R.string.Ok, R.string.cancel);
             }
         });
 //-----------------------------------------------
@@ -283,7 +293,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
             String get_tab = (enterTab.getText().toString());
             octava_set = 0;
             get_tab = get_tab.replace("\n", " \n ");
-            input_tabs(get_tab);
+            get_input_tabs(get_tab);
             changetabs(harp1, harp2);
         } catch (Exception e) {
             e.printStackTrace();
@@ -294,9 +304,9 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         try {
             tempArray.clear();
             String rezultat = "";
-            int temp = check_temp(harp1.position, harp2.position);
-            for (int i = 0; i < list.size(); i++) {
-                String list_i = list.get(i);
+            int temp = check_difference_position(harp1.position, harp2.position);
+            for (int i = 0; i < input_list.size(); i++) {
+                String list_i = input_list.get(i);
                 if (list_i.contains("\n"))
                     rezultat += "\n";
                 for (int j = 0; j < 38; j++) {
@@ -323,7 +333,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         }
     }
 
-    public static int check_temp(int n, int z) {
+    public static int check_difference_position(int n, int z) {
         int temps = z - n;
         int[] nums = {-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11};
         for (int i : nums) {
@@ -344,7 +354,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 //    }
 
 
-    public void dialog_chose_key(final Harp harp, final View view) {
+    public void dialog_chose_key(final Harp harp, final View view, final boolean isharp1) {
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.button_key);
         dialog.setTitle("Выберите тональность:");
@@ -387,6 +397,10 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                 harp.makeharp(harp.stroi, harp.position, (TextView) view);
                 calculate(harp1, harp2);
                 dialog.dismiss();
+                if (!isharp1) {
+                    seekBar.setProgress(check_difference_position(harp1.position, harp2.position));
+                }
+
             }
         };
         button0.setOnClickListener(onClickListener);
@@ -404,7 +418,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     }
 
     // Ввод исходных табов от пользователя
-    public static void input_tabs(String inputtabs) {
+    public static void get_input_tabs(String inputtabs) {
         String str[] = inputtabs.split(" ");
 
         int i = 0;
@@ -417,7 +431,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         }
         while (i != str.length);
 
-        list = new ArrayList<>(Arrays.asList(str));
+        input_list = new ArrayList<>(Arrays.asList(str));
     }
 
     @Override
@@ -428,30 +442,24 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
             position = Math.abs(12 - position);
         }
         harp2.makeharp(harp2.stroi, position);
+        need_harm_key_view.setText(harp2.key_of_harp);
         calculate(harp1, harp2);
-
-
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
     }
-
-
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
-
     }
 
 
-    private void showDeleteConfirmationDialog() {
+    public void showDeleteConfirmationDialog(int message, int positive, int negative) {
         // Create an AlertDialog.Builder and set the message, and click listeners
         // for the postivie and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.delete_dialog_msg);
-        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+        builder.setMessage(message);
+        builder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Intent intent = getIntent();
                 finish();
@@ -461,7 +469,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 
             }
         });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
                 // and continue editing the pet.
@@ -475,63 +483,3 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         alertDialog.show();
     }
 }
-
-
-//    private void displayDatabaseInfo() {
-//        // Create and/or open a database to read from it
-//        SQLiteDatabase db = dbHelper.getReadableDatabase();
-//
-//        // Define a projection that specifies which columns from the database
-//        // you will actually use after this query.
-//        String[] projection = {
-//                TabsContract.COLUMN_TAB_NAME,
-//                TabsContract.COLUMN_TABS};
-//
-//        // Perform a query on the pets table
-//        Cursor cursor = db.query(
-//                TabsContract.TABLE_NAME,   // The table to query
-//                projection,            // The columns to return
-//                null,                  // The columns for the WHERE clause
-//                null,                  // The values for the WHERE clause
-//                null,                  // Don't group the rows
-//                null,                  // Don't filter by row groups
-//                null);                   // The sort order
-//
-////        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
-//
-//        try {
-//            // Create a header in the Text View that looks like this:
-//            //
-//            // The pets table contains <number of rows in Cursor> pets.
-//            // _id - name - breed - gender - weight
-//            //
-//            // In the while loop below, iterate through the rows of the cursor and display
-//            // the information from each column in this order.
-//            result.append(TabsContract.COLUMN_TAB_NAME + " -------- " +
-//                    TabsContract.COLUMN_TABS + "\n");
-//
-//            // Figure out the index of each column
-//            int tabsColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TABS);
-//            int nameColumnIndex = cursor.getColumnIndex(TabsContract.COLUMN_TAB_NAME);
-//
-//
-//            // Iterate through all the returned rows in the cursor
-//            while (cursor.moveToNext()) {
-//                // Use that index to extract the String or Int value of the word
-//                // at the current row the cursor is on.
-//                String currentTabs = cursor.getString(tabsColumnIndex);
-//                String currentName = cursor.getString(nameColumnIndex);
-//
-//                // Display the values from each column of the current row in the cursor in the TextView
-//                result.append(("\n" + currentName + " - " +
-//                        currentTabs));
-//            }
-//        } finally {
-//            // Always close the cursor when you're done reading from it. This releases all its
-//            // resources and makes it invalid.
-//            cursor.close();
-//        }
-
-
-
-

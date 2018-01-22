@@ -1,10 +1,8 @@
 package com.example.user.helpharp;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -14,8 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.user.helpharp.data.TabsContract;
@@ -35,17 +31,14 @@ public class CatalogActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
-
-
-        // Find the ListView which will be populated with the pet data
         ListView tabListView = (ListView) findViewById(R.id.list);
 
-        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        // Find and set empty view on the ListView, so that it only shows when the input_list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
         tabListView.setEmptyView(emptyView);
 
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        // Setup an Adapter to create a input_list item for each row of pet data in the Cursor.
+        // There is no data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new TabsCursorAdapter(this, null);
         tabListView.setAdapter(mCursorAdapter);
 
@@ -77,38 +70,10 @@ public class CatalogActivity extends Activity implements
 
     }
 
-    /**
-     * Helper method to insert hardcoded pet data into the database. For debugging purposes only.
-     */
-    public void insertTAB(View view) {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.save_form);
-        dialog.setTitle("Введите название:");
-        dialog.show();
-        final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
-        final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);
-        buttonOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String bdname = String.valueOf(name.getText());
-                String bdtab = String.valueOf(MainActivity.enterTab.getText());
-                ContentValues values = new ContentValues();
-                values.put(TabsContract.COLUMN_TAB_NAME, bdname);
-                values.put(TabsContract.COLUMN_TABS, bdtab);
-                Uri newUri = getContentResolver().insert(TabsContract.CONTENT_URI, values);
-                dialog.dismiss();
-            }
-        });
-    }
-
-    /**
-     * Helper method to delete all pets in the database.
-     */
     private void deleteAllTabs() {
         int rowsDeleted = getContentResolver().delete(TabsContract.CONTENT_URI, null, null);
         Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {

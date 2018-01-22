@@ -119,7 +119,7 @@ public class TabsProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case TABS:
-                return insertPet(uri, contentValues);
+                return insertTab(uri, contentValues);
             default:
                 throw new IllegalArgumentException("Insertion is not supported for " + uri);
         }
@@ -129,7 +129,7 @@ public class TabsProvider extends ContentProvider {
      * Insert a pet into the database with the given content values. Return the new content URI
      * for that specific row in the database.
      */
-    private Uri insertPet(Uri uri, ContentValues values) {
+    private Uri insertTab(Uri uri, ContentValues values) {
         // Check that the name is not null
         String name = values.getAsString(TabsContract.COLUMN_TAB_NAME);
         if (name == null) {
@@ -161,14 +161,14 @@ public class TabsProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case TABS:
-                return updatePet(uri, contentValues, selection, selectionArgs);
+                return updateTab(uri, contentValues, selection, selectionArgs);
             case TAB_ID:
                 // For the PET_ID code, extract out the ID from the URI,
                 //  so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
                 selection = TabsContract._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return updatePet(uri, contentValues, selection, selectionArgs);
+                return updateTab(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " + uri);
         }
@@ -179,7 +179,7 @@ public class TabsProvider extends ContentProvider {
      * specified in the selection and selection arguments (which could be 0 or 1 or more pets).
      * Return the number of rows that were successfully updated.
      */
-    private int updatePet(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    private int updateTab(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         // check that the name value is not null.
         if (values.containsKey(TabsContract.COLUMN_TAB_NAME)) {
             String name = values.getAsString(TabsContract.COLUMN_TAB_NAME);

@@ -7,10 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class Menu_activity extends Activity {
-
     private Button scale, tabs;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,11 +19,10 @@ public class Menu_activity extends Activity {
         scale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Menu_activity.this, Activity2.class);
+                Intent myIntent = new Intent(Menu_activity.this, ScaleActivity.class);
                 startActivity(myIntent);
             }
         });
-
 
         tabs.setOnClickListener(new View.OnClickListener() {
             @Override

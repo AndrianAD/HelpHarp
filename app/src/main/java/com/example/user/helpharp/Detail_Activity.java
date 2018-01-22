@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.example.user.helpharp.data.TabsContract;
 
 public class Detail_Activity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private Uri mCurrentPetUri;
+    private Uri mCurrentTabUri;
     private TextView name, tabs;
     private Button delete;
     private static final int EXISTING_LOADER = 0;
@@ -30,7 +30,7 @@ public class Detail_Activity extends Activity implements LoaderManager.LoaderCal
         setContentView(R.layout.detail_activity);
 
         Intent intent = getIntent();
-        mCurrentPetUri = intent.getData();
+        mCurrentTabUri = intent.getData();
         name = (TextView) findViewById(R.id.editor_name);
         tabs = (TextView) findViewById(R.id.editor_tabs);
         delete = (Button) findViewById(R.id.delete_one);
@@ -47,7 +47,7 @@ public class Detail_Activity extends Activity implements LoaderManager.LoaderCal
                 TabsContract.COLUMN_TAB_NAME,
                 TabsContract.COLUMN_TABS};
         return new CursorLoader(this,   // Parent activity context
-                mCurrentPetUri,         // Query the content URI for the current pet
+                mCurrentTabUri,         // Query the content URI for the current pet
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
@@ -74,11 +74,8 @@ public class Detail_Activity extends Activity implements LoaderManager.LoaderCal
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
         name.setText("");
         tabs.setText("");
-
-
     }
 
     public void delete(View view) {
@@ -114,12 +111,12 @@ public class Detail_Activity extends Activity implements LoaderManager.LoaderCal
      * Perform the deletion of the pet in the database.
      */
     private void deleteTab() {
-        // Only perform the delete if this is an existing pet.
-        if (mCurrentPetUri != null) {
+        // Only perform the delete if this is an existing tab.
+        if (mCurrentTabUri != null) {
             // Call the ContentResolver to delete the pet at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentPetUri
-            // content URI already identifies the pet that we want.
-            int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
+            // Pass in null for the selection and selection args because the mCurrentTabUri
+            // content URI already identifies the tab that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentTabUri, null, null);
 
             // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
@@ -132,7 +129,6 @@ public class Detail_Activity extends Activity implements LoaderManager.LoaderCal
                         Toast.LENGTH_SHORT).show();
             }
         }
-
         // Close the activity
         finish();
     }

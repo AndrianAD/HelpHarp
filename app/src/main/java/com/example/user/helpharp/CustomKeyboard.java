@@ -1,22 +1,19 @@
 package com.example.user.helpharp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.text.Editable;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import static com.example.user.helpharp.MainActivity.calculate;
-import static com.example.user.helpharp.MainActivity.harp1;
-import static com.example.user.helpharp.MainActivity.harp2;
+import static com.example.user.helpharp.MainActivity.userHarp;
+import static com.example.user.helpharp.MainActivity.needHarp;
 
 public class CustomKeyboard {
     /**
@@ -50,15 +47,15 @@ public class CustomKeyboard {
                 hideCustomKeyboard();
             } else if (primaryCode == CodeDelete) {
                 if (editable != null && start > 0) editable.delete(start - 1, start);
-                calculate(harp1, harp2);
+                calculate(userHarp, needHarp);
 
             } else if (primaryCode == Ten) {
                 editable.insert(start, "10");
-                calculate(harp1, harp2);
+                calculate(userHarp, needHarp);
 
             } else { // insert character
                 editable.insert(start, Character.toString((char) primaryCode));
-                calculate(harp1, harp2);
+                calculate(userHarp, needHarp);
 
             }
         }

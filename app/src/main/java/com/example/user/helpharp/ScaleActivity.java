@@ -23,7 +23,7 @@ public class ScaleActivity extends Activity {
     TextView major, minor, blues, penta_minor, penta_major;
     Harp harp = new Harp();
     int out_spiner2 = 5;
-    private static final Map<String, Integer> mapNotes = new HashMap<String, Integer>() {
+    private static final Map<String, Integer> scaleNote = new HashMap<String, Integer>() {
         {
             put("G", 0);
             put("Ab", 1);
@@ -49,7 +49,7 @@ public class ScaleActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity2);
+        setContentView(R.layout.scale_activity);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         harp.makeharp("Рихтеровская", 5);
 
@@ -62,20 +62,20 @@ public class ScaleActivity extends Activity {
 
 
         // -------Spiner1
-        final Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
-// Настраиваем адаптер
+        final Spinner left_spinner = (Spinner) findViewById(R.id.spinner1);
+// Настраиваем адаптер`
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this, R.array.harmonica_key, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Вызываем адаптер
-        spinner1.setAdapter(adapter);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        left_spinner.setAdapter(adapter);
+        left_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {
 
                 String[] choose = getResources().getStringArray(R.array.harmonica_key);
                 String mychoose = choose[selectedItemPosition];
-                if (mapNotes.containsKey(mychoose)) ;
-                int note = mapNotes.get(mychoose);
+                if (scaleNote.containsKey(mychoose)) ;
+                int note = scaleNote.get(mychoose);
                 harp.makeharp("Рихтеровская", note);
                 getAllScales();
             }
@@ -87,19 +87,19 @@ public class ScaleActivity extends Activity {
 
 
         // -------Spiner2
-        final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
+        final Spinner right_spinner = (Spinner) findViewById(R.id.spinner2);
 // Настраиваем адаптер
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Вызываем адаптер
-        spinner2.setAdapter(adapter);
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        right_spinner.setAdapter(adapter);
+        right_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {
 
                 String[] choose = getResources().getStringArray(R.array.harmonica_key);
                 String mychoose = choose[selectedItemPosition];
-                if (mapNotes.containsKey(mychoose)) ;
-                out_spiner2 = mapNotes.get(mychoose);
+                if (scaleNote.containsKey(mychoose)) ;
+                out_spiner2 = scaleNote.get(mychoose);
                 getAllScales();
             }
 
@@ -171,38 +171,38 @@ public class ScaleActivity extends Activity {
     }
 
     //----------------------------------------------------------
-    public void makeScale(boolean isChecked, int masiv[], TextView resultView) {
-        int j = 0, int_masiv;
+    public void makeScale(boolean isChecked, int scale_array[], TextView resultView) {
+        int j = 0, temp;
         String firstString, secondString = "";
         StringBuilder stringBuilder = new StringBuilder();
-        int temp = check_difference_position(harp.position, out_spiner2);
-        for (int i = temp; i > 0; i = i - int_masiv) {
-            int_masiv = masiv[j + masiv.length - 1];
-            if (i - int_masiv < 0) {
+        int difference_position = check_difference_position(harp.position, out_spiner2);
+        for (int i = difference_position; i > 0; i = i - temp) {
+            temp = scale_array[j + scale_array.length - 1];
+            if (i - temp < 0) {
                 break;
             }
-            Hole nots = (Hole) harp.allnote.get(i - int_masiv);
+            Hole nots = (Hole) harp.allnote.get(i - temp);
             j--;
             stringBuilder.insert(0, isChecked ? nots.getNote() + " " : nots.getTabs() + " ");
         }
         firstString = String.valueOf(stringBuilder);
 
-        Hole nots = (Hole) harp.allnote.get(temp);
+        Hole nots = (Hole) harp.allnote.get(difference_position);
         String firsTonica = isChecked ? nots.getNote() + " " : nots.getTabs();
-        nots = (Hole) harp.allnote.get(temp + 12);
+        nots = (Hole) harp.allnote.get(difference_position + 12);
         String secondTonica = isChecked ? nots.getNote() + " " : new String(" " + nots.getTabs() + " ");
-        nots = (Hole) harp.allnote.get(temp + 24);
+        nots = (Hole) harp.allnote.get(difference_position + 24);
         String thirdTonica = isChecked ? nots.getNote() + " " : new String(" " + nots.getTabs() + " ");
         int lenght = firsTonica.length();
         int lenght2 = secondTonica.length();
         int lenght3 = thirdTonica.length();
 
         j = 0;
-        for (int i = 0; i < 37 - temp; i = i + int_masiv) {
-            int_masiv = masiv[j];
-            nots = (Hole) harp.allnote.get(i + temp);
+        for (int i = 0; i < 37 - difference_position; i = i + temp) {
+            temp = scale_array[j];
+            nots = (Hole) harp.allnote.get(i + difference_position);
             j++;
-            if (j == masiv.length) {
+            if (j == scale_array.length) {
                 j = 0;
             }
             secondString += isChecked ? nots.getNote() + " " : nots.getTabs() + " ";

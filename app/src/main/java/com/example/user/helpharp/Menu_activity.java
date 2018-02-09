@@ -7,16 +7,16 @@ import android.view.View;
 import android.widget.Button;
 
 public class Menu_activity extends Activity {
-    private Button scale, tabs;
+    private Button activityScale, activityTabs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_activity);
 
-        scale = (Button) findViewById(R.id.scale);
-        tabs = (Button) findViewById(R.id.tab);
+        activityScale = (Button) findViewById(R.id.scale);
+        activityTabs = (Button) findViewById(R.id.tab);
 
-        scale.setOnClickListener(new View.OnClickListener() {
+        activityScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(Menu_activity.this, ScaleActivity.class);
@@ -24,7 +24,7 @@ public class Menu_activity extends Activity {
             }
         });
 
-        tabs.setOnClickListener(new View.OnClickListener() {
+        activityTabs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(Menu_activity.this, MainActivity.class);

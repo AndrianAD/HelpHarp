@@ -12,16 +12,14 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1">
@@ -49,7 +47,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:orientation="horizontal"
@@ -79,7 +77,7 @@
             android:id="@+id/need_harm_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Желаемая " />
+            android:text="Нужная " />
 
         <TextView
             android:id="@+id/view_z"
@@ -96,49 +94,42 @@
 
     <TextView
         android:id="@+id/text_view_result"
-        android:layout_width="240dp"
+        android:layout_width="236dp"
         android:layout_height="157dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:hint="Здесь должен быть результат"
+        android:layout_marginTop="12dp"
+        android:hint="Результат:"
         android:scrollbars="vertical"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/keyboardview"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar"
-        app:layout_constraintVertical_bias="0.135"
-        tools:layout_constraintLeft_creator="1"
-        tools:text="Result" />
+        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
 
     <SeekBar
         android:id="@+id/seekbar"
-        android:layout_width="326dp"
-        android:layout_height="31dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="346dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginStart="17dp"
         android:max="11"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reset_id" />
 
     <EditText
         android:id="@+id/edit_text_enter_tabl"
-        android:layout_width="275dp"
-        android:layout_height="72dp"
-        android:layout_marginBottom="21dp"
-        android:layout_marginEnd="11dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
         android:ems="10"
         android:hint="Табы: (через пробел 1 -1 -1' 1*) "
-        app:layout_constraintBottom_toTopOf="@+id/seekbar"
+        app:layout_constraintBottom_toBottomOf="@+id/reset_id"
         app:layout_constraintEnd_toStartOf="@+id/reset_id"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="@+id/button" />
 
 
     <ImageButton
@@ -146,48 +137,40 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="53dp"
         android:layout_height="42dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/octava_minus"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toEndOf="@+id/text_view_result"
-        app:layout_constraintTop_toTopOf="@+id/text_view_result"
-        app:layout_constraintVertical_bias="0.024"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        app:layout_constraintTop_toTopOf="@+id/text_view_result" />
 
     <ImageButton
         android:id="@+id/octava_minus"
         android:layout_width="53dp"
         android:layout_height="42dp"
-        android:layout_marginBottom="56dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_view_result"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toEndOf="@+id/text_view_result"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        app:layout_constraintTop_toBottomOf="@+id/octava_plus" />
 
     <ImageButton
         android:id="@+id/reset_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_autorenew_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/seekbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_enter_tabl"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:layout_constraintTop_creator="1"
-        android:background="?android:attr/selectableItemBackground" />
+        app:layout_constraintTop_toBottomOf="@+id/open_list"
+        tools:layout_constraintTop_creator="1" />
 
     <!--<Button-->
     <!--android:id="@+id/button_copy"-->
@@ -209,27 +192,33 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <ImageButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp"
+        android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_save_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/reset_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_enter_tabl"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         tools:layout_constraintBaseline_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:background="?android:attr/selectableItemBackground" />
+        tools:layout_constraintRight_creator="1" />
 
-
+    <ImageButton
+        android:id="@+id/open_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="12dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="OpenList"
+        android:src="@drawable/ic_list_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 </android.support.constraint.ConstraintLayout>

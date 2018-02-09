@@ -29,8 +29,8 @@ import java.util.Map;
 
 
 public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
-    public static Harp harp1 = new Harp();
-    public static Harp harp2 = new Harp();
+    public static Harp userHarp = new Harp();
+    public static Harp needHarp = new Harp();
     CustomKeyboard mCustomKeyboard;
     public static ArrayList<String> input_list = new ArrayList<String>();
     public static ArrayList<Integer> tempArray = new ArrayList<>();
@@ -129,8 +129,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                         values.put(TabsContract.COLUMN_TABS, bdtab);
                         Uri newUri = getContentResolver().insert(TabsContract.CONTENT_URI, values);
                         dialog.dismiss();
-                        Intent myIntent = new Intent(MainActivity.this, CatalogActivity.class);
-                        startActivity(myIntent);
+                        OpenList(null);
                     }
                 });
 
@@ -154,7 +153,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                     }
                     if (min >= 12) {
                         octava_set = octava_set + 12;
-                        changetabs(harp1, harp2);
+                        changetabs(userHarp, needHarp);
                     } else
                         return;
                 } catch (Exception e) {
@@ -170,7 +169,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                     int max = (int) Collections.max(tempArray);
                     if (max <= 25) {
                         octava_set = octava_set + (-12);
-                        changetabs(harp1, harp2);
+                        changetabs(userHarp, needHarp);
                     } else
                         return;
                 } catch (Exception e) {
@@ -183,7 +182,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 //        actionCount.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                calculate(harp1, harp2);
+//                calculate(userHarp, needHarp);
 //            }
 //        });
 
@@ -192,7 +191,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         my_harm_key.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog_chose_key(harp1, my_harm_key_view, true);
+                dialog_chose_key(userHarp, my_harm_key_view, true);
 
             }
         });
@@ -201,7 +200,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         need_harm_key.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog_chose_key(harp2, need_harm_key_view, false);
+                dialog_chose_key(needHarp, need_harm_key_view, false);
             }
         });
 
@@ -216,34 +215,40 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         });
 //-----------------------------------------------
         // -------Spiner
-        final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
+        final Spinner needHarp = (Spinner) findViewById(R.id.spinner2);
 // Настраиваем адаптер
         ArrayAdapter<?> adapter =
                 ArrayAdapter.createFromResource(this, R.array.harmonica_stroi, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Вызываем адаптер
-        spinner2.setAdapter(adapter);
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        needHarp.setAdapter(adapter);
+        needHarp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {
                 String[] choose = getResources().getStringArray(R.array.harmonica_stroi);
 
                 if (choose[selectedItemPosition].equals("Рихтеровская")) {
-                    harp2.stroi = "Рихтеровская";
-                    harp2.makeharp(harp2.stroi, harp2.position, need_harm_key_view);
-                    calculate(harp1, harp2);
+                    MainActivity.needHarp.stroi = "Рихтеровская";
+                    MainActivity.needHarp.makeharp(MainActivity.needHarp.stroi, MainActivity.needHarp.position, need_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
 
                 }
                 if (choose[selectedItemPosition].equals("Падди")) {
-                    harp2.stroi = "Падди";
-                    harp2.makeharp(harp2.stroi, harp2.position, need_harm_key_view);
-                    calculate(harp1, harp2);
+                    MainActivity.needHarp.stroi = "Падди";
+                    MainActivity.needHarp.makeharp(MainActivity.needHarp.stroi, MainActivity.needHarp.position, need_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
 
                 }
                 if (choose[selectedItemPosition].equals("Кантри")) {
-                    harp2.stroi = "Кантри";
-                    harp2.makeharp(harp2.stroi, harp2.position, need_harm_key_view);
-                    calculate(harp1, harp2);
+                    MainActivity.needHarp.stroi = "Кантри";
+                    MainActivity.needHarp.makeharp(MainActivity.needHarp.stroi, MainActivity.needHarp.position, need_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
+
+                }
+                if (choose[selectedItemPosition].equals("Нат. Минор")) {
+                    MainActivity.needHarp.stroi = "Нат. Минор";
+                    MainActivity.needHarp.makeharp(MainActivity.needHarp.stroi, MainActivity.needHarp.position, need_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
 
                 }
             }
@@ -253,29 +258,36 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         });
 //-----------------------------------------------
         // -------Spiner
-        final Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
+        final Spinner userSpiner = (Spinner) findViewById(R.id.spinner1);
 // Вызываем адаптер
-        spinner1.setAdapter(adapter);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        userSpiner.setAdapter(adapter);
+        userSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int selectedItemPosition, long selectedId) {
 
                 String[] choose = getResources().getStringArray(R.array.harmonica_stroi);
                 if (choose[selectedItemPosition].equals("Рихтеровская")) {
-                    harp1.stroi = "Рихтеровская";
-                    harp1.makeharp(harp1.stroi, harp1.position, my_harm_key_view);
-                    calculate(harp1, harp2);
+                    userHarp.stroi = "Рихтеровская";
+                    userHarp.makeharp(userHarp.stroi, userHarp.position, my_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
                 }
                 if (choose[selectedItemPosition].equals("Падди")) {
-                    harp1.stroi = "Падди";
-                    harp1.makeharp(harp1.stroi, harp1.position, my_harm_key_view);
-                    calculate(harp1, harp2);
+                    userHarp.stroi = "Падди";
+                    userHarp.makeharp(userHarp.stroi, userHarp.position, my_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
                 }
                 if (choose[selectedItemPosition].equals("Кантри")) {
-                    harp1.stroi = "Кантри";
-                    harp1.makeharp(harp1.stroi, harp1.position, my_harm_key_view);
-                    calculate(harp1, harp2);
+                    userHarp.stroi = "Кантри";
+                    userHarp.makeharp(userHarp.stroi, userHarp.position, my_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
                 }
+                if (choose[selectedItemPosition].equals("Нат. Минор")) {
+                    userHarp.stroi = "Нат. Минор";
+                    userHarp.makeharp(userHarp.stroi, userHarp.position, my_harm_key_view);
+                    calculate(userHarp, MainActivity.needHarp);
+                }
+
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -354,7 +366,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 //    }
 
 
-    public void dialog_chose_key(final Harp harp, final View view, final boolean isharp1) {
+    public void dialog_chose_key(final Harp harp, final View view, final boolean if_userHarp) {
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.button_key);
         dialog.setTitle("Выберите тональность:");
@@ -395,10 +407,10 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                 int note = mapNotes.get(temp);
                 harp.position = note;
                 harp.makeharp(harp.stroi, harp.position, (TextView) view);
-                calculate(harp1, harp2);
+                calculate(userHarp, needHarp);
                 dialog.dismiss();
-                if (!isharp1) {
-                    seekBar.setProgress(check_difference_position(harp1.position, harp2.position));
+                if (!if_userHarp) {
+                    seekBar.setProgress(check_difference_position(userHarp.position, needHarp.position));
                 }
 
             }
@@ -420,30 +432,27 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     // Ввод исходных табов от пользователя
     public static void get_input_tabs(String inputtabs) {
         String str[] = inputtabs.split(" ");
-
         int i = 0;
-
         do {
-            if (str[i].equals("3") && harp1.stroi != "Падди") {
+            if (str[i].equals("3") && userHarp.stroi != "Падди") {
                 str[i] = "-2";
             }
             i++;
         }
         while (i != str.length);
-
         input_list = new ArrayList<>(Arrays.asList(str));
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         progress = seekBar.getProgress();
-        int position = harp1.position + progress;
-        if (harp1.position + progress >= 12) {
+        int position = userHarp.position + progress;
+        if (userHarp.position + progress >= 12) {
             position = Math.abs(12 - position);
         }
-        harp2.makeharp(harp2.stroi, position);
-        need_harm_key_view.setText(harp2.key_of_harp);
-        calculate(harp1, harp2);
+        needHarp.makeharp(needHarp.stroi, position);
+        need_harm_key_view.setText(needHarp.key_of_harp);
+        calculate(userHarp, needHarp);
     }
 
     @Override
@@ -481,5 +490,10 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public void OpenList(View view) {
+        Intent myIntent = new Intent(MainActivity.this, CatalogActivity.class);
+        startActivity(myIntent);
     }
 }

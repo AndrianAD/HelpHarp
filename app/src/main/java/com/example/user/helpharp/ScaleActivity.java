@@ -21,8 +21,10 @@ import static com.example.user.helpharp.MainActivity.check_difference_position;
 
 public class ScaleActivity extends Activity {
     TextView major, minor, blues, penta_minor, penta_major;
-    Harp harp = new Harp();
-    int out_spiner2 = 5;
+    static Harp harp = new Harp();
+    static int out_spiner1 = 5;
+    static int out_spiner2 = 5;
+
     private static final Map<String, Integer> scaleNote = new HashMap<String, Integer>() {
         {
             put("G", 0);
@@ -51,7 +53,7 @@ public class ScaleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scale_activity);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        harp.makeharp("Рихтеровская", 5);
+        harp.makeharp("Рихтеровская", out_spiner1);
 
 
         major = (TextView) findViewById(R.id.gamma_major);
@@ -75,8 +77,8 @@ public class ScaleActivity extends Activity {
                 String[] choose = getResources().getStringArray(R.array.harmonica_key);
                 String mychoose = choose[selectedItemPosition];
                 if (scaleNote.containsKey(mychoose)) ;
-                int note = scaleNote.get(mychoose);
-                harp.makeharp("Рихтеровская", note);
+                out_spiner1 = scaleNote.get(mychoose);
+                harp.makeharp(harp.stroi, out_spiner1);
                 getAllScales();
             }
 
@@ -107,6 +109,52 @@ public class ScaleActivity extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+
+        // -------Spiner stroi
+        final Spinner spiner_stroi = (Spinner) findViewById(R.id.spinner_stroi);
+        adapter = ArrayAdapter.createFromResource(this, R.array.harmonica_stroi, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiner_stroi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+
+                String[] choose = getResources().getStringArray(R.array.harmonica_stroi);
+                if (harp.stroi != "Рихтеровская") {
+                    harp.makeharp("Рихтеровская", out_spiner1);
+                }
+                if (choose[selectedItemPosition].equals("Рихтеровская")) {
+                    harp.stroi = "Рихтеровская";
+                    harp.makeharp("Рихтеровская", out_spiner1);
+                    getAllScales();
+                }
+                if (choose[selectedItemPosition].equals("Падди")) {
+                    harp.stroi = "Падди";
+                    harp.makeharp("Падди", out_spiner1);
+                    getAllScales();
+                }
+                if (choose[selectedItemPosition].equals("Кантри")) {
+                    harp.stroi = "Кантри";
+                    harp.makeharp("Кантри", out_spiner1);
+                    getAllScales();
+
+                }
+                if (choose[selectedItemPosition].equals("Нат. Минор")) {
+                    harp.stroi = "Нат. Минор";
+                    harp.makeharp("Нат. Минор", out_spiner1);
+                    getAllScales();
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+
 
 
 //        // Чекбокс мажор

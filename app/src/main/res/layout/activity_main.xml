@@ -71,7 +71,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:text=""
-            android:textSize="22dp" />
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/need_harm_key"
@@ -86,7 +86,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:text=""
-            android:textSize="22dp" />
+            android:textSize="22sp" />
 
 
     </LinearLayout>

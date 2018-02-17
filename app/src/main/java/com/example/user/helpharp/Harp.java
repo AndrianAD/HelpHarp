@@ -13,8 +13,7 @@ public class Harp {
 
     public void makeharp(String stroi,int position,TextView textView){
         allnote=make_list(stroi,position);
-        Hole hole = (Hole) allnote.get(0);
-        key_of_harp= hole.getNote();
+        key_of_harp = ((Hole) allnote.get(0)).getNote();
         this.stroi=stroi;
         this.position=position;
         textView.setText(key_of_harp);
@@ -23,8 +22,7 @@ public class Harp {
 
     public void makeharp(String stroi, int position) {
         allnote = make_list(stroi, position);
-        Hole hole = (Hole) allnote.get(0);
-        key_of_harp = hole.getNote();
+        key_of_harp = ((Hole) allnote.get(0)).getNote();
         this.stroi = stroi;
         this.position = position;
     }

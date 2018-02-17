@@ -15,15 +15,7 @@ public class TabsProvider extends ContentProvider {
      * Tag for the log messages
      */
     public static final String LOG_TAG = TabsProvider.class.getSimpleName();
-
-    /**
-     * URI matcher code for the content URI for the pets table
-     */
     private static final int TABS = 100;
-
-    /**
-     * URI matcher code for the content URI for a single pet in the pets table
-     */
     private static final int TAB_ID = 101;
 
     /**
@@ -133,7 +125,7 @@ public class TabsProvider extends ContentProvider {
         // Check that the name is not null
         String name = values.getAsString(TabsContract.COLUMN_TAB_NAME);
         if (name == null) {
-            throw new IllegalArgumentException("Pet requires a name");
+            throw new IllegalArgumentException("Tab requires a name");
         }
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyHeight="10%p"
+    android:keyHeight="8%p"
     android:keyWidth="40%p">
     <!--
         android:horizontalGap="0.50%p"
@@ -11,10 +11,9 @@
 
     <Row>
         <Key
-            android:codes="-5"
-            android:isRepeatable="true"
-            android:keyEdgeFlags="left"
-            android:keyIcon="@drawable/sym_keyboard_delete" />
+            android:codes="57"
+            android:keyEdgeFlags="right"
+            android:keyLabel="9" />
         <Key
             android:codes="55"
             android:keyLabel="7" />
@@ -22,10 +21,10 @@
             android:codes="56"
             android:keyLabel="8" />
         <Key
-            android:codes="57"
-            android:keyEdgeFlags="right"
-            android:keyLabel="9" />
-
+            android:codes="-5"
+            android:isRepeatable="true"
+            android:keyEdgeFlags="left"
+            android:keyIcon="@drawable/sym_keyboard_delete" />
 
     </Row>
     <Row>

@@ -1,4 +1,5 @@
 package com.example.user.helpharp;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,8 +21,11 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.user.helpharp.data.TabsContract;
 import com.example.user.helpharp.data.TabsDBHelper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,7 +72,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 
     public void start_activity() {
         final Button my_harm_key, need_harm_key, actionCount, btncopy_enter, btncopy_result;
-        ImageButton newactivity;
+        ImageButton save_enterTabs, save_resultTabs;
         final TextView my_harm_key_view = (TextView) findViewById(R.id.view_n);
         my_harm_key = (Button) findViewById(R.id.button_my_harm_key);
         need_harm_key = (Button) findViewById(R.id.need_harm_key);
@@ -109,35 +114,26 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 //        });
 
 
-        newactivity = (ImageButton) findViewById(R.id.button);
-        newactivity.setOnClickListener(new View.OnClickListener() {
+        save_enterTabs = (ImageButton) findViewById(R.id.enter_save);
+        save_enterTabs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(MainActivity.this);
-                dialog.setContentView(R.layout.save_form);
-                dialog.setTitle("Введите название:");
-                dialog.show();
-                final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
-                final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);
-                buttonOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String bdname = String.valueOf(name.getText());
-                        String bdtab = String.valueOf(MainActivity.enterTab.getText());
-                        ContentValues values = new ContentValues();
-                        values.put(TabsContract.COLUMN_TAB_NAME, bdname);
-                        values.put(TabsContract.COLUMN_TABS, bdtab);
-                        Uri newUri = getContentResolver().insert(TabsContract.CONTENT_URI, values);
-                        dialog.dismiss();
-                        OpenList(null);
-                    }
-                });
-
-
-
-
+                save_form(enterTab.getText().toString());
             }
         });
+
+
+        save_resultTabs = (ImageButton) findViewById(R.id.result_save);
+        save_resultTabs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save_form(result.getText().toString());
+            }
+        });
+
+
+
+
 
 
         final ImageButton octava_plus = (ImageButton) findViewById(R.id.octava_plus);
@@ -293,6 +289,35 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+
+    private void save_form(final String text) {
+        if (!text.equals("")) {
+            final Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.save_form);
+            dialog.setTitle("Введите название:");
+            dialog.show();
+            final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
+            final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);
+            buttonOK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String bdname = String.valueOf(name.getText());
+                    ContentValues values = new ContentValues();
+                    values.put(TabsContract.COLUMN_TAB_NAME, bdname);
+                    values.put(TabsContract.COLUMN_TABS, text);
+                    Uri newUri = getContentResolver().insert(TabsContract.CONTENT_URI, values);
+                    dialog.dismiss();
+                    OpenList(null);
+                }
+            });
+        }
+        if (text.equals("")) {
+            Toast toast = Toast.makeText(MainActivity.this, "Для начала введите табы!",
+                    Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 //-----------------------------------------------
 
@@ -481,7 +506,6 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         builder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the pet.
                 if (dialog != null) {
                     dialog.dismiss();
                 }

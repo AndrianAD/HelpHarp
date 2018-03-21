@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -299,6 +300,16 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
             dialog.show();
             final Button buttonOK = (Button) dialog.findViewById(R.id.save_form_bt_OK);
             final EditText name = (EditText) dialog.findViewById(R.id.save_form_et_name);
+            name.post(new Runnable() {
+                @Override
+                public void run() {
+                    InputMethodManager inputMethodManager =
+                            (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInputFromWindow(
+                            name.getApplicationWindowToken(), InputMethodManager.SHOW_IMPLICIT, 0);
+                    name.requestFocus();
+                }
+            });
             buttonOK.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

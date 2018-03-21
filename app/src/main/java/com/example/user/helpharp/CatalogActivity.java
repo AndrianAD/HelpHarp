@@ -10,6 +10,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,10 +24,7 @@ public class CatalogActivity extends Activity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int TABS_LOADER = 0;
-
-    /**
-     * Adapter for the ListView
-     */
+    // Adapter for the ListView
     TabsCursorAdapter mCursorAdapter;
 
     @Override
@@ -46,29 +46,46 @@ public class CatalogActivity extends Activity implements
         tabListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // Create new intent to go to {@link EditorActivity}
                 Intent intent = new Intent(CatalogActivity.this, Detail_Activity.class);
-
-                // Form the content URI that represents the specific pet that was clicked on,
-                // by appending the "id" (passed as input to this method) onto the
-                // {@link PetEntry#CONTENT_URI}.
-                // For example, the URI would be "content://com.example.android.pets/pets/2"
-                // if the pet with ID 2 was clicked on.
-                Uri currentPetUri = ContentUris.withAppendedId(TabsContract.CONTENT_URI, id);
-
-                // Set the URI on the data field of the intent
-                intent.setData(currentPetUri);
-
-                // Launch the {@link EditorActivity} to display the data for the current pet.
+                Uri CurrentTabUri = ContentUris.withAppendedId(TabsContract.CONTENT_URI, id);
+                intent.setData(CurrentTabUri);
                 startActivity(intent);
             }
         });
+
+        registerForContextMenu(tabListView);
+
 
 
         getLoaderManager().initLoader(TABS_LOADER, null, this);
 
 
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.edit:
+
+                return true;
+            case R.id.delete:
+                Uri CurrentTabUri = ContentUris.withAppendedId(TabsContract.CONTENT_URI, info.id);
+                getContentResolver().delete(CurrentTabUri, null, null);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
 
     private void deleteAllTabs() {
         int rowsDeleted = getContentResolver().delete(TabsContract.CONTENT_URI, null, null);

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.user.helpharp.data.TabsContract;
 
@@ -26,6 +27,7 @@ public class CatalogActivity extends Activity implements
     private static final int TABS_LOADER = 0;
     // Adapter for the ListView
     TabsCursorAdapter mCursorAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,6 @@ public class CatalogActivity extends Activity implements
 
         registerForContextMenu(tabListView);
 
-
-
         getLoaderManager().initLoader(TABS_LOADER, null, this);
 
 
@@ -74,7 +74,17 @@ public class CatalogActivity extends Activity implements
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-            case R.id.edit:
+            case R.id.share:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                View view = info.targetView;
+                TextView nameTextView = (TextView) view.findViewById(R.id.name);
+                TextView summaryTextView = (TextView) view.findViewById(R.id.tab);
+                String name = nameTextView.getText().toString();
+                String tabs = summaryTextView.getText().toString();
+                String textToIntent = name + "\n" + tabs;
+                intent.putExtra(Intent.EXTRA_TEXT, textToIntent);
+                startActivity(intent);
 
                 return true;
             case R.id.delete:
@@ -105,18 +115,16 @@ public class CatalogActivity extends Activity implements
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
-                TabsContract._ID + " DESC");                  // Default sort order
+                TabsContract._ID + " DESC");
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Update {@link PetCursorAdapter} with this new cursor containing updated pet data
         mCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        // Callback called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
     }
 }

@@ -9,7 +9,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -99,7 +98,7 @@ public class CatalogActivity extends Activity implements
 
     private void deleteAllTabs() {
         int rowsDeleted = getContentResolver().delete(TabsContract.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+
     }
 
     @Override

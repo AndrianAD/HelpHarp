@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -219,7 +220,7 @@ public class ScaleActivity extends Activity {
     }
 
     //----------------------------------------------------------
-    public void makeScale(boolean isChecked, int scale_array[], TextView resultView) {
+    public SpannableStringBuilder makeScale(boolean isChecked, int[] scale_array, TextView resultView) {
         int j = 0, temp;
         String firstString, secondString = "";
         StringBuilder stringBuilder = new StringBuilder();
@@ -267,6 +268,7 @@ public class ScaleActivity extends Activity {
         SpannableStringBuilder sb3 = new SpannableStringBuilder(sb2);
         sb3.setSpan(new ForegroundColorSpan(Color.MAGENTA), indexTonica3, indexTonica3 + lenght3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         resultView.setText(sb3);
+        return sb3;
     }
 
     //----------------------------------------------------------
@@ -278,4 +280,8 @@ public class ScaleActivity extends Activity {
         makeScale(false, pentamajorScale, penta_major);
     }
 
+    public void open_test_activity(View view) {
+
+
+    }
 }

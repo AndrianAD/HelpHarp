@@ -1,7 +1,6 @@
 package com.example.user.helpharp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,6 +25,16 @@ public class ScaleActivity extends Activity {
     static Harp harp = new Harp();
     static int out_spiner1 = 5;
     static int out_spiner2 = 5;
+    private int[] allNotes_id = {R.id.b10, R.id.b40, R.id.b30, R.id.b00, R.id.b11, R.id.b51, R.id.b41, R.id.b31, R.id.b62, R.id.b52, R.id.b42, R.id.b32, R.id.b13,
+            R.id.b43, R.id.b33, R.id.b03, R.id.b14, R.id.b34, R.id.b04, R.id.b15, R.id.b45, R.id.b35, R.id.b05, R.id.b36, R.id.b16,
+            R.id.b46, R.id.b37, R.id.b07, R.id.b17, R.id.b38, R.id.b08, R.id.b18, R.id.b48, R.id.b39, R.id.b009, R.id.b09, R.id.b19, R.id.b49};
+
+
+
+
+
+
+
 
     private static final Map<String, Integer> scaleNote = new HashMap<String, Integer>() {
         {
@@ -63,6 +72,7 @@ public class ScaleActivity extends Activity {
         blues = (TextView) findViewById(R.id.gamma_blues);
         penta_minor = (TextView) findViewById(R.id.penta_minor);
         penta_major = (TextView) findViewById(R.id.penta_major);
+        show_harmonica();
 
 
         // -------Spiner1
@@ -82,8 +92,8 @@ public class ScaleActivity extends Activity {
                 out_spiner1 = scaleNote.get(mychoose);
                 harp.makeharp(harp.stroi, out_spiner1);
                 getAllScales();
+                show_harmonica();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -220,6 +230,7 @@ public class ScaleActivity extends Activity {
         });
     }
 
+
     //----------------------------------------------------------
     public String makeScale(boolean isChecked, int[] scale_array, TextView resultView) {
         int j = 0, temp;
@@ -281,11 +292,17 @@ public class ScaleActivity extends Activity {
         makeScale(false, pentamajorScale, penta_major);
     }
 
-    public void open_test_activity(View view) {
-        String toIntent = harp.printlist(harp.allnote, false);
-        Intent myIntent = new Intent(this, Test_activity.class);
-        myIntent.putExtra("message", toIntent);
-        startActivity(myIntent);
-
+    private void show_harmonica() {
+        String all_Notes = harp.printlist(harp.allnote, false);
+        String all_Tabs = harp.printlist(harp.allnote, true);
+        String array_of_Notes[] = all_Notes.split(" ");
+        String array_of_allTabs[] = all_Tabs.split(" ");
+        TextView textView;
+        textView = (TextView) findViewById(R.id.b12);
+        textView.setText(array_of_Notes[7]);
+        for (int i = 0; i < allNotes_id.length; i++) {
+            textView = (TextView) findViewById(allNotes_id[i]);
+            textView.setText(array_of_Notes[i]);
+        }
     }
 }

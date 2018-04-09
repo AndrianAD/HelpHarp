@@ -150,7 +150,8 @@
         android:gravity="center"
         android:text=" 1 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1 " />
+        grid:layout_columnWeight="1 "
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b21"
@@ -159,7 +160,8 @@
         android:gravity="center"
         android:text=" 2 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b22"
@@ -168,7 +170,8 @@
         android:gravity="center"
         android:text=" 3 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b23"
@@ -177,7 +180,8 @@
         android:gravity="center"
         android:text=" 4 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b24"
@@ -186,7 +190,8 @@
         android:gravity="center"
         android:text=" 5 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b25"
@@ -195,7 +200,8 @@
         android:gravity="center"
         android:text=" 6 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b26"
@@ -204,7 +210,8 @@
         android:gravity="center"
         android:text=" 7 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b27"
@@ -213,7 +220,8 @@
         android:gravity="center"
         android:text=" 8 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b28"
@@ -222,7 +230,8 @@
         android:gravity="center"
         android:text=" 9 "
         android:background="@color/colorPrimaryDark"
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b29"
@@ -231,7 +240,8 @@
         android:gravity="center"
         android:background="@color/colorPrimaryDark"
         android:text="10 "
-        grid:layout_columnWeight="1" />
+        grid:layout_columnWeight="1"
+        android:layout_columnWeight="1" />
 
     <TextView
         android:id="@+id/b30"
@@ -413,19 +423,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         grid:layout_columnWeight="1" />
-
     <TextView
         android:id="@+id/b60"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         grid:layout_columnWeight="1" />
-
     <TextView
         android:id="@+id/b61"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         grid:layout_columnWeight="1" />
-
     <TextView
         android:id="@+id/b62"
         android:layout_width="wrap_content"

@@ -282,9 +282,9 @@ public class ScaleActivity extends Activity {
     }
 
     public void open_test_activity(View view) {
-        String stringBuilder = makeScale(false, majorScale, major);
+        String toIntent = harp.printlist(harp.allnote, false);
         Intent myIntent = new Intent(this, Test_activity.class);
-        myIntent.putExtra("message", stringBuilder);
+        myIntent.putExtra("message", toIntent);
         startActivity(myIntent);
 
     }

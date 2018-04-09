@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.user.helpharp.data.TabsContract;
+import com.example.user.helpharp.data.TabsCursorAdapter;
 
 
 public class CatalogActivity extends Activity implements

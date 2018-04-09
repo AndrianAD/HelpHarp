@@ -1,6 +1,7 @@
 package com.example.user.helpharp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -220,7 +221,7 @@ public class ScaleActivity extends Activity {
     }
 
     //----------------------------------------------------------
-    public SpannableStringBuilder makeScale(boolean isChecked, int[] scale_array, TextView resultView) {
+    public String makeScale(boolean isChecked, int[] scale_array, TextView resultView) {
         int j = 0, temp;
         String firstString, secondString = "";
         StringBuilder stringBuilder = new StringBuilder();
@@ -268,7 +269,7 @@ public class ScaleActivity extends Activity {
         SpannableStringBuilder sb3 = new SpannableStringBuilder(sb2);
         sb3.setSpan(new ForegroundColorSpan(Color.MAGENTA), indexTonica3, indexTonica3 + lenght3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         resultView.setText(sb3);
-        return sb3;
+        return fullstring;
     }
 
     //----------------------------------------------------------
@@ -281,7 +282,10 @@ public class ScaleActivity extends Activity {
     }
 
     public void open_test_activity(View view) {
-
+        String stringBuilder = makeScale(false, majorScale, major);
+        Intent myIntent = new Intent(this, Test_activity.class);
+        myIntent.putExtra("message", stringBuilder);
+        startActivity(myIntent);
 
     }
 }

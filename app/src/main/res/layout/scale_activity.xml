@@ -72,12 +72,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--<Button-->
-    <!--android:id="@+id/button12"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Button"-->
-    <!--android:onClick="open_test_activity"/>-->
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:onClick="open_test_activity" />
 
     <Spinner
         android:id="@+id/spinner_stroi"
@@ -121,7 +121,6 @@
             android:padding="5dp" />
 
     </LinearLayout>
-
 
 </LinearLayout>
 

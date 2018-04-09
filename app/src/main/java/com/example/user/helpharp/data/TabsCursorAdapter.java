@@ -1,4 +1,4 @@
-package com.example.user.helpharp;
+package com.example.user.helpharp.data;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.example.user.helpharp.data.TabsContract;
+import com.example.user.helpharp.R;
 
 public class TabsCursorAdapter extends CursorAdapter {
 

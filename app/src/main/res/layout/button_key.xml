@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:columnCount="3"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/Background">
 
     <Button
         android:id="@+id/button5"

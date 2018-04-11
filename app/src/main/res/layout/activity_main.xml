@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.user.helpharp.MainActivity"
-    tools:layout_editor_absoluteY="25dp">
+    tools:layout_editor_absoluteY="25dp"
+    android:background="@color/Background">
 
 
     <LinearLayout
@@ -109,16 +110,17 @@
 
     <SeekBar
         android:id="@+id/seekbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="346dp"
         android:layout_marginEnd="17dp"
         android:layout_marginStart="17dp"
+        android:layout_marginTop="8dp"
         android:max="11"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reset_id" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_enter_tabl" />
 
     <EditText
         android:id="@+id/edit_text_enter_tabl"
@@ -164,12 +166,10 @@
         android:id="@+id/reset_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="40dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_autorenew_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/open_list"
         tools:layout_constraintTop_creator="1" />

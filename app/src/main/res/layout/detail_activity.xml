@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.helpharp.Detail_Activity"
     tools:layout_editor_absoluteX="10dp"
-    tools:layout_editor_absoluteY="25dp">
+    tools:layout_editor_absoluteY="25dp"
+    android:background="@color/Background">
 
     <TextView
         android:id="@+id/editor_name"

@@ -25,16 +25,11 @@ public class ScaleActivity extends Activity {
     static Harp harp = new Harp();
     static int out_spiner1 = 5;
     static int out_spiner2 = 5;
-    private int[] allNotes_id = {R.id.b10, R.id.b40, R.id.b30, R.id.b00, R.id.b11, R.id.b51, R.id.b41, R.id.b31, R.id.b62, R.id.b52, R.id.b42, R.id.b32, R.id.b13,
+    private int[] allNotes_id_Rihter = {R.id.b10, R.id.b40, R.id.b30, R.id.b00, R.id.b11, R.id.b51, R.id.b41, R.id.b31, R.id.b62, R.id.b52, R.id.b42, R.id.b32, R.id.b13,
             R.id.b43, R.id.b33, R.id.b03, R.id.b14, R.id.b34, R.id.b04, R.id.b15, R.id.b45, R.id.b35, R.id.b05, R.id.b36, R.id.b16,
             R.id.b46, R.id.b37, R.id.b07, R.id.b17, R.id.b38, R.id.b08, R.id.b18, R.id.b48, R.id.b39, R.id.b009, R.id.b09, R.id.b19, R.id.b49};
 
-
-
-
-
-
-
+    private int[] allNotes_id_Cantri = allNotes_id_Rihter;
 
     private static final Map<String, Integer> scaleNote = new HashMap<String, Integer>() {
         {
@@ -57,6 +52,7 @@ public class ScaleActivity extends Activity {
     final private int[] bluesScale = {3, 2, 1, 1, 3, 2};
     final private int[] pentamajorScale = {2, 2, 3, 2, 3};
     final private int[] pentaminorScale = {3, 2, 2, 3, 2};
+    private CheckBox switchCheckBox_minor, switchCheckBox_blues, switchCheckBox_penta_minor, switchCheckBox_major, switchCheckBox_penta_major;
 
 
     @Override
@@ -72,6 +68,12 @@ public class ScaleActivity extends Activity {
         blues = (TextView) findViewById(R.id.gamma_blues);
         penta_minor = (TextView) findViewById(R.id.penta_minor);
         penta_major = (TextView) findViewById(R.id.penta_major);
+        switchCheckBox_major = (CheckBox) findViewById(R.id.switch_check_box_major);
+        switchCheckBox_blues = (CheckBox) findViewById(R.id.switch_check_box_blues);
+        switchCheckBox_penta_major = (CheckBox) findViewById(R.id.checkBox_penta_major);
+        switchCheckBox_penta_minor = (CheckBox) findViewById(R.id.checkBox_penta_minor);
+        switchCheckBox_minor = (CheckBox) findViewById(R.id.switch_check_box_minor);
+        switchCheckBox_major.setChecked(true);
         show_harmonica();
 
 
@@ -99,7 +101,6 @@ public class ScaleActivity extends Activity {
             }
         });
 
-
         // -------Spiner2
         final Spinner right_spinner = (Spinner) findViewById(R.id.spinner2);
 // Настраиваем адаптер
@@ -115,6 +116,7 @@ public class ScaleActivity extends Activity {
                 if (scaleNote.containsKey(mychoose)) ;
                 out_spiner2 = scaleNote.get(mychoose);
                 getAllScales();
+                show_harmonica();
             }
 
             @Override
@@ -170,7 +172,6 @@ public class ScaleActivity extends Activity {
 
 
 //        // Чекбокс мажор
-        CheckBox switchCheckBox_major = (CheckBox) findViewById(R.id.switch_check_box_major);
         switchCheckBox_major.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -182,7 +183,6 @@ public class ScaleActivity extends Activity {
         });
 
 // Чекбокс мінор
-        CheckBox switchCheckBox_minor = (CheckBox) findViewById(R.id.switch_check_box_minor);
         switchCheckBox_minor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -194,7 +194,6 @@ public class ScaleActivity extends Activity {
         });
 
 // Чекбокс блюз
-        CheckBox switchCheckBox_blues = (CheckBox) findViewById(R.id.switch_check_box_blues);
         switchCheckBox_blues.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -206,7 +205,6 @@ public class ScaleActivity extends Activity {
         });
 
         // Чекбокс минорная пентатоника
-        CheckBox switchCheckBox_penta_minor = (CheckBox) findViewById(R.id.checkBox_penta_minor);
         switchCheckBox_penta_minor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -218,7 +216,6 @@ public class ScaleActivity extends Activity {
         });
 
         // Чекбокс мажорная пентатоника
-        CheckBox switchCheckBox_penta_major = (CheckBox) findViewById(R.id.checkBox_penta_major);
         switchCheckBox_penta_major.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -297,12 +294,58 @@ public class ScaleActivity extends Activity {
         String all_Tabs = harp.printlist(harp.allnote, true);
         String array_of_Notes[] = all_Notes.split(" ");
         String array_of_allTabs[] = all_Tabs.split(" ");
+        String major_gama = makeScale(false, majorScale, major);
         TextView textView;
         textView = (TextView) findViewById(R.id.b12);
         textView.setText(array_of_Notes[7]);
-        for (int i = 0; i < allNotes_id.length; i++) {
-            textView = (TextView) findViewById(allNotes_id[i]);
+        for (int i = 0; i < allNotes_id_Rihter.length; i++) {
+            textView = (TextView) findViewById(allNotes_id_Rihter[i]);
             textView.setText(array_of_Notes[i]);
         }
+        int iterator = 0;
+        CheckBox[] arrayCheckBox = {switchCheckBox_major, switchCheckBox_minor, switchCheckBox_blues, switchCheckBox_penta_minor, switchCheckBox_penta_major};
+        String curent_scale[] = get_scale(if_checkBox_is_Cheked(arrayCheckBox));
+        for (int x = 0; x < curent_scale.length; x++) {
+            for (int y = iterator; y < allNotes_id_Rihter.length; y++) {
+                textView = (TextView) findViewById(allNotes_id_Rihter[y]);
+                String curentString = (String) textView.getText();
+                if (curent_scale[x].equals(curentString)) {
+                    textView.setTextColor(Color.parseColor("#cc0000"));
+                    iterator = y;
+                    break;
+                }
+
+
+            }
+
+        }
+
     }
+
+
+    private CheckBox if_checkBox_is_Cheked(CheckBox[] arrayCheckBox) {
+        CheckBox checkBox = null;
+        for (int i = 0; i < arrayCheckBox.length; i++) {
+            checkBox = arrayCheckBox[i];
+            if (checkBox.isChecked()) {
+                return checkBox;
+            }
+        }
+        return null;
+    }
+
+    private String[] get_scale(CheckBox checkBox) {
+        String scale = "";
+        String[] array_scale = null;
+        if (checkBox.getId() == R.id.switch_check_box_major) {
+            scale = makeScale(true, majorScale, major);
+        }
+        if (checkBox.getId() == R.id.switch_check_box_minor) {
+            scale = makeScale(true, majorScale, minor);
+        }
+        array_scale = scale.split(" ");
+        return array_scale;
+    }
+
+
 }

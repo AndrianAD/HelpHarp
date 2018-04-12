@@ -11,7 +11,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             >
 
             <ImageView
@@ -28,6 +27,7 @@
             <GridLayout xmlns:grid="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/grid_layout"
                 android:layout_centerHorizontal="true"
                 android:columnCount="10"
                 android:layout_marginLeft="7dp"
@@ -841,7 +841,7 @@
 
 
         <CheckBox
-            android:id="@+id/switch_check_box_major"
+            android:id="@+id/checkBox__major"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -854,7 +854,7 @@
             android:padding="10dp" />
 
         <CheckBox
-            android:id="@+id/switch_check_box_minor"
+            android:id="@+id/checkBox_minor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -867,7 +867,7 @@
             android:padding="10dp" />
 
         <CheckBox
-            android:id="@+id/switch_check_box_blues"
+            android:id="@+id/checkBox_blues"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"

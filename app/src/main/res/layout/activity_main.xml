@@ -65,7 +65,8 @@
             android:id="@+id/button_my_harm_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ваша " />
+            android:text="Ваша "
+            android:background="@color/Button" />
 
         <TextView
             android:id="@+id/view_n"
@@ -80,7 +81,8 @@
             android:id="@+id/need_harm_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нужная " />
+            android:text="Нужная "
+            android:background="@color/Button" />
 
         <TextView
             android:id="@+id/view_z"

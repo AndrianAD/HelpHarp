@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.GridLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -61,18 +62,17 @@ public class ScaleActivity extends Activity {
         setContentView(R.layout.scale_activity);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         harp.makeharp("Рихтеровская", out_spiner1);
-
-
+        final GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layout);
         major = (TextView) findViewById(R.id.gamma_major);
         minor = (TextView) findViewById(R.id.gamma_minor);
         blues = (TextView) findViewById(R.id.gamma_blues);
         penta_minor = (TextView) findViewById(R.id.penta_minor);
         penta_major = (TextView) findViewById(R.id.penta_major);
-        switchCheckBox_major = (CheckBox) findViewById(R.id.switch_check_box_major);
-        switchCheckBox_blues = (CheckBox) findViewById(R.id.switch_check_box_blues);
+        switchCheckBox_major = (CheckBox) findViewById(R.id.checkBox__major);
+        switchCheckBox_blues = (CheckBox) findViewById(R.id.checkBox_blues);
         switchCheckBox_penta_major = (CheckBox) findViewById(R.id.checkBox_penta_major);
         switchCheckBox_penta_minor = (CheckBox) findViewById(R.id.checkBox_penta_minor);
-        switchCheckBox_minor = (CheckBox) findViewById(R.id.switch_check_box_minor);
+        switchCheckBox_minor = (CheckBox) findViewById(R.id.checkBox_minor);
         switchCheckBox_major.setChecked(true);
         show_harmonica();
 
@@ -94,6 +94,7 @@ public class ScaleActivity extends Activity {
                 out_spiner1 = scaleNote.get(mychoose);
                 harp.makeharp(harp.stroi, out_spiner1);
                 getAllScales();
+                clear_view(gridLayout);
                 show_harmonica();
             }
             @Override
@@ -116,6 +117,7 @@ public class ScaleActivity extends Activity {
                 if (scaleNote.containsKey(mychoose)) ;
                 out_spiner2 = scaleNote.get(mychoose);
                 getAllScales();
+                clear_view(gridLayout);
                 show_harmonica();
             }
 
@@ -337,14 +339,33 @@ public class ScaleActivity extends Activity {
     private String[] get_scale(CheckBox checkBox) {
         String scale = "";
         String[] array_scale = null;
-        if (checkBox.getId() == R.id.switch_check_box_major) {
+        if (checkBox.getId() == R.id.checkBox__major) {
             scale = makeScale(true, majorScale, major);
         }
-        if (checkBox.getId() == R.id.switch_check_box_minor) {
-            scale = makeScale(true, majorScale, minor);
+        if (checkBox.getId() == R.id.checkBox_minor) {
+            scale = makeScale(true, minorScale, minor);
         }
+        if (checkBox.getId() == R.id.checkBox_blues) {
+            scale = makeScale(true, bluesScale, blues);
+        }
+        if (checkBox.getId() == R.id.checkBox_penta_major) {
+            scale = makeScale(true, pentamajorScale, penta_major);
+        }
+        if (checkBox.getId() == R.id.checkBox_penta_minor) {
+            scale = makeScale(true, pentaminorScale, penta_minor);
+        }
+
+
         array_scale = scale.split(" ");
         return array_scale;
+    }
+
+    private void clear_view(GridLayout layout) {
+        final int childCount = layout.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            TextView textView = (TextView) layout.getChildAt(i);
+            textView.setTextColor(getResources().getColor(R.color.Default));
+        }
     }
 
 

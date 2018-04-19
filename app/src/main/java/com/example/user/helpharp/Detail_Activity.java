@@ -8,7 +8,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.user.helpharp.data.TabsContract;
@@ -16,7 +15,6 @@ import com.example.user.helpharp.data.TabsContract;
 public class Detail_Activity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
     private Uri mCurrentTabUri;
     private TextView name, tabs;
-    private Button delete;
     private static final int EXISTING_LOADER = 0;
 
 

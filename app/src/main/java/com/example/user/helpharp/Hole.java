@@ -50,7 +50,7 @@ public class Hole {
                     new Note("E", ""), new Note("F", ""), new Note("F#", ""), new Note("G", "")};
         }
         if (stroi == "Падди") {
-            masiv_note[8] = new Note("Eb", "3*");
+            masiv_note[8] = new Note("Eb", "2*");
             masiv_note[9] = new Note("E", "3");
         }
         if (stroi == "Кантри") {
@@ -67,7 +67,6 @@ public class Hole {
             masiv_note[15] = new Note("Bb", "5");
             masiv_note[16] = new Note("B", "-5'");
             masiv_note[22] = new Note("F", "-7");
-            masiv_note[23] = new Note("F#", "7'");
             masiv_note[23] = new Note("F#", "7'");
             masiv_note[27] = new Note("Bb", "8");
             masiv_note[28] = new Note("B", "-8*");

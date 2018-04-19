@@ -42,7 +42,7 @@ public class CatalogActivity extends Activity implements
         View emptyView = findViewById(R.id.empty_view);
         tabListView.setEmptyView(emptyView);
 
-        // Setup an Adapter to create a input_list item for each row of pet data in the Cursor.
+        // Setup an Adapter to create a input_list item for each row
         // There is no data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new TabsCursorAdapter(this, null);
         tabListView.setAdapter(mCursorAdapter);

@@ -25,10 +25,7 @@ public class ScaleActivity extends Activity {
     static Harp harp = new Harp();
     static int out_spiner1 = 5;
     static int out_spiner2 = 5;
-    private int[] allNotes_id_Rihter = {R.id.b10, R.id.b40, R.id.b30, R.id.b00, R.id.b11, R.id.b51, R.id.b41, R.id.b31, R.id.b62, R.id.b52, R.id.b42, R.id.b32, R.id.b13,
-            R.id.b43, R.id.b33, R.id.b03, R.id.b14, R.id.b34, R.id.b04, R.id.b15, R.id.b45, R.id.b35, R.id.b05, R.id.b36, R.id.b16,
-            R.id.b46, R.id.b37, R.id.b07, R.id.b17, R.id.b38, R.id.b08, R.id.b18, R.id.b48, R.id.b39, R.id.b009, R.id.b09, R.id.b19, R.id.b49};
-    private int[] allNotes_id_Cantri;
+
     private static final Map<String, Integer> scaleNote = new HashMap<String, Integer>() {
         {
             put("G", 0);
@@ -52,6 +49,12 @@ public class ScaleActivity extends Activity {
     final private int[] pentaminorScale = {3, 2, 2, 3, 2};
     private CheckBox switchCheckBox_minor, switchCheckBox_blues, switchCheckBox_penta_minor, switchCheckBox_major, switchCheckBox_penta_major;
     private CheckBox[] arrayOfCheckBox;
+    private int[] positionsGrid;
+    private boolean flagMajor = false;
+    private boolean flagMinor = false;
+    private boolean flagBlues = false;
+    private boolean flagPentaMajor = false;
+    private boolean flagPentaMinor = false;
 
 
     @Override
@@ -73,7 +76,9 @@ public class ScaleActivity extends Activity {
         switchCheckBox_minor = (CheckBox) findViewById(R.id.checkBox_minor);
         switchCheckBox_major.setChecked(true);
         arrayOfCheckBox = new CheckBox[]{switchCheckBox_minor, switchCheckBox_blues, switchCheckBox_penta_minor, switchCheckBox_major, switchCheckBox_penta_major};
-        show_harmonica();
+        final GridPositions gridPositions = new GridPositions();
+        positionsGrid = gridPositions.positions_id_Rihter;
+        show_harmonica(positionsGrid);
 
 
         // -------Spiner1
@@ -94,7 +99,7 @@ public class ScaleActivity extends Activity {
                 harp.makeharp(harp.stroi, out_spiner1);
                 getAllScales();
                 clear_view(gridLayout);
-                show_harmonica();
+                show_harmonica(positionsGrid);
             }
 
             @Override
@@ -118,7 +123,7 @@ public class ScaleActivity extends Activity {
                 out_spiner2 = scaleNote.get(mychoose);
                 getAllScales();
                 clear_view(gridLayout);
-                show_harmonica();
+                show_harmonica(positionsGrid);
             }
 
             @Override
@@ -138,27 +143,39 @@ public class ScaleActivity extends Activity {
                 String[] choose = getResources().getStringArray(R.array.harmonica_stroi);
                 if (harp.stroi != "Рихтеровская") {
                     harp.makeharp("Рихтеровская", out_spiner1);
+
                 }
                 if (choose[selectedItemPosition].equals("Рихтеровская")) {
                     harp.stroi = "Рихтеровская";
                     harp.makeharp("Рихтеровская", out_spiner1);
                     getAllScales();
+                    clear_view(gridLayout);
+                    positionsGrid = gridPositions.positions_id_Rihter;
+                    show_harmonica(positionsGrid);
                 }
                 if (choose[selectedItemPosition].equals("Падди")) {
                     harp.stroi = "Падди";
                     harp.makeharp("Падди", out_spiner1);
                     getAllScales();
+                    clear_view(gridLayout);
+                    positionsGrid = gridPositions.positions_id_Paddy;
+                    show_harmonica(positionsGrid);
                 }
                 if (choose[selectedItemPosition].equals("Кантри")) {
                     harp.stroi = "Кантри";
                     harp.makeharp("Кантри", out_spiner1);
                     getAllScales();
-
+                    clear_view(gridLayout);
+                    positionsGrid = gridPositions.positions_id_Country;
+                    show_harmonica(positionsGrid);
                 }
                 if (choose[selectedItemPosition].equals("Нат. Минор")) {
                     harp.stroi = "Нат. Минор";
                     harp.makeharp("Нат. Минор", out_spiner1);
                     getAllScales();
+                    clear_view(gridLayout);
+                    positionsGrid = gridPositions.positions_id_Natural_Minor;
+                    show_harmonica(positionsGrid);
 
                 }
 
@@ -178,13 +195,11 @@ public class ScaleActivity extends Activity {
                     return;
                 }
                 deleselect_all_exeptOf();
+                makeScale(!flagMajor, majorScale, major);
+                flagMajor = !flagMajor;
                 switchCheckBox_major.setChecked(true);
                 clear_view(gridLayout);
-                show_harmonica();
-                makeScale(false, minorScale, minor);
-                makeScale(false, bluesScale, blues);
-                makeScale(false, pentaminorScale, penta_minor);
-                makeScale(false, pentamajorScale, penta_major);
+                show_harmonica(positionsGrid);
             }
         });
 
@@ -196,13 +211,11 @@ public class ScaleActivity extends Activity {
                     return;
                 }
                 deleselect_all_exeptOf();
+                makeScale(!flagMinor, minorScale, minor);
+                flagMinor = !flagMinor;
                 switchCheckBox_minor.setChecked(true);
                 clear_view(gridLayout);
-                show_harmonica();
-                makeScale(false, majorScale, major);
-                makeScale(false, bluesScale, blues);
-                makeScale(false, pentaminorScale, penta_minor);
-                makeScale(false, pentamajorScale, penta_major);
+                show_harmonica(positionsGrid);
 
             }
         });
@@ -215,13 +228,11 @@ public class ScaleActivity extends Activity {
                     return;
                 }
                 deleselect_all_exeptOf();
+                makeScale(!flagBlues, bluesScale, blues);
+                flagBlues = !flagBlues;
                 switchCheckBox_blues.setChecked(true);
                 clear_view(gridLayout);
-                show_harmonica();
-                makeScale(false, majorScale, major);
-                makeScale(false, minorScale, minor);
-                makeScale(false, pentaminorScale, penta_minor);
-                makeScale(false, pentamajorScale, penta_major);
+                show_harmonica(positionsGrid);
 
             }
         });
@@ -234,13 +245,11 @@ public class ScaleActivity extends Activity {
                     return;
                 }
                 deleselect_all_exeptOf();
+                makeScale(!flagPentaMinor, pentaminorScale, penta_minor);
+                flagPentaMinor = !flagPentaMinor;
                 switchCheckBox_penta_minor.setChecked(true);
                 clear_view(gridLayout);
-                show_harmonica();
-                makeScale(false, majorScale, major);
-                makeScale(false, minorScale, minor);
-                makeScale(false, bluesScale, blues);
-                makeScale(false, pentamajorScale, penta_major);
+                show_harmonica(positionsGrid);
 
 
             }
@@ -254,13 +263,11 @@ public class ScaleActivity extends Activity {
                     return;
                 }
                 deleselect_all_exeptOf();
+                makeScale(!flagPentaMajor, pentamajorScale, penta_major);
+                flagPentaMajor = !flagPentaMajor;
                 switchCheckBox_penta_major.setChecked(true);
                 clear_view(gridLayout);
-                show_harmonica();
-                makeScale(false, majorScale, major);
-                makeScale(false, minorScale, minor);
-                makeScale(false, bluesScale, blues);
-                makeScale(false, pentaminorScale, penta_minor);
+                show_harmonica(positionsGrid);
 
             }
         });
@@ -314,7 +321,9 @@ public class ScaleActivity extends Activity {
         sb2.setSpan(new ForegroundColorSpan(Color.BLUE), indexTonica2, indexTonica2 + lenght2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         SpannableStringBuilder sb3 = new SpannableStringBuilder(sb2);
         sb3.setSpan(new ForegroundColorSpan(Color.MAGENTA), indexTonica3, indexTonica3 + lenght3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        resultView.setText(sb3);
+        if (resultView != null) {
+            resultView.setText(sb3);
+        }
         return fullstring;
     }
 
@@ -327,26 +336,31 @@ public class ScaleActivity extends Activity {
         makeScale(false, pentamajorScale, penta_major);
     }
 
-    private void show_harmonica() {
+    private void show_harmonica(int[] positionsGrid) {
         String all_Notes = harp.printlist(harp.allnote, false);
         String all_Tabs = harp.printlist(harp.allnote, true);
         String array_of_Notes[] = all_Notes.split(" ");
         String array_of_allTabs[] = all_Tabs.split(" ");
         TextView textView;
+        Spinner spinner_scale = (Spinner) findViewById(R.id.spinner2);
         textView = (TextView) findViewById(R.id.b12);
         textView.setText(array_of_Notes[7]);
-        for (int i = 0; i < allNotes_id_Rihter.length; i++) {
-            textView = (TextView) findViewById(allNotes_id_Rihter[i]);
+        for (int i = 0; i < positionsGrid.length; i++) {
+            textView = (TextView) findViewById(positionsGrid[i]);
             textView.setText(array_of_Notes[i]);
         }
         int iterator = 0;
         String curent_scale[] = get_scale(if_checkBox_is_Cheked(arrayOfCheckBox));
         for (int x = 0; x < curent_scale.length; x++) {
-            for (int y = iterator; y < allNotes_id_Rihter.length; y++) {
-                textView = (TextView) findViewById(allNotes_id_Rihter[y]);
+            for (int y = iterator; y < positionsGrid.length; y++) {
+                textView = (TextView) findViewById(positionsGrid[y]);
                 String curentString = (String) textView.getText();
                 if (curent_scale[x].equals(curentString)) {
-                    textView.setTextColor(Color.parseColor("#cc0000"));
+                    textView.setTextColor(Color.parseColor("#0000cc"));
+                    if (curentString.equals(spinner_scale.getSelectedItem().toString())) {
+                        textView.setTextColor(Color.parseColor("#cc0000"));
+
+                    }
                     iterator = y;
                     break;
                 }
@@ -372,19 +386,19 @@ public class ScaleActivity extends Activity {
         String scale = "";
         String[] array_scale = null;
         if (checkBox.getId() == R.id.checkBox__major) {
-            scale = makeScale(true, majorScale, major);
+            scale = makeScale(true, majorScale, null);
         }
         if (checkBox.getId() == R.id.checkBox_minor) {
-            scale = makeScale(true, minorScale, minor);
+            scale = makeScale(true, minorScale, null);
         }
         if (checkBox.getId() == R.id.checkBox_blues) {
-            scale = makeScale(true, bluesScale, blues);
+            scale = makeScale(true, bluesScale, null);
         }
         if (checkBox.getId() == R.id.checkBox_penta_major) {
-            scale = makeScale(true, pentamajorScale, penta_major);
+            scale = makeScale(true, pentamajorScale, null);
         }
         if (checkBox.getId() == R.id.checkBox_penta_minor) {
-            scale = makeScale(true, pentaminorScale, penta_minor);
+            scale = makeScale(true, pentaminorScale, null);
         }
 
 
@@ -398,6 +412,12 @@ public class ScaleActivity extends Activity {
             TextView textView = (TextView) layout.getChildAt(i);
             textView.setTextColor(getResources().getColor(R.color.Default));
         }
+        for (int i = 0; i < positionsGrid.length; i++) {
+            TextView textView = (TextView) findViewById(positionsGrid[i]);
+            textView.setText("");
+        }
+
+
     }
 
     private void deleselect_all_exeptOf() {
